@@ -776,3 +776,25 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Safari alignment fixes */
+_::-webkit-full-page-media, _:future, :root .about-content {
+    align-items: flex-start;
+}
+
+_::-webkit-full-page-media, _:future, :root .contact-grid {
+    grid-gap: 20px;
+}
+
+/* Fix for Safari flexbox bugs */
+@supports (overflow:-webkit-marquee) and (justify-content:inherit) {
+    .steps {
+        display: block;
+    }
+    
+    .step {
+        display: inline-block;
+        width: 48%;
+        vertical-align: top;
+    }
+}
