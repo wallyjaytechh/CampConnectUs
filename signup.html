@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CampConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>CampConnect</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html#features">Features</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="signup.html" class="btn-signup">Sign Up</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Signup Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join CampConnect today and connect with your campus community</p>
+                </div>
+                
+                <!-- Profile Picture Upload -->
+                <div class="profile-upload">
+                    <div class="profile-image-container">
+                        <img id="imagePreview" src="" alt="Profile Preview" style="display: none;">
+                        <div class="upload-placeholder">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Upload Photo</span>
+                        </div>
+                    </div>
+                    <label class="upload-btn">
+                        <input type="file" id="profileImage" accept="image/*">
+                        Choose Profile Picture
+                    </label>
+                </div>
+                
+                <form id="signupForm" class="auth-form">
+                    <!-- User Type Selection -->
+                    <input type="hidden" id="userType" name="userType" value="student" required>
+                    <div class="user-type-selector">
+                        <div class="user-type-btn active" data-type="student">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Student</span>
+                        </div>
+                        <div class="user-type-btn" data-type="staff">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Staff</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Personal Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required 
+                                   placeholder="Enter your first name">
+                            <div class="form-error" id="firstNameError"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required 
+                                   placeholder="Enter your last name">
+                            <div class="form-error" id="lastNameError"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required 
+                               placeholder="Enter your email address">
+                        <div class="form-error" id="emailError"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required 
+                               placeholder="Enter your phone number">
+                        <div class="form-error" id="phoneError"></div>
+                    </div>
+                    
+                    <!-- Student/Staff Specific Fields -->
+                    <div id="studentFields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="studentId">Student ID *</label>
+                                <input type="text" id="studentId" name="studentId" required 
+                                       placeholder="Enter your student ID">
+                                <div class="form-error" id="studentIdError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="major">Major/Program *</label>
+                                <input type="text" id="major" name="major" required 
+                                       placeholder="Enter your major">
+                                <div class="form-error" id="majorError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="year">Year of Study *</label>
+                                <select id="year" name="year" required>
+                                    <option value="">Select year</option>
+                                    <option value="1">First Year</option>
+                                    <option value="2">Second Year</option>
+                                    <option value="3">Third Year</option>
+                                    <option value="4">Fourth Year</option>
+                                    <option value="5">Fifth Year+</option>
+                                </select>
+                                <div class="form-error" id="yearError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="campus">Campus *</label>
+                                <input type="text" id="campus" name="campus" required 
+                                       placeholder="Enter your campus">
+                                <div class="form-error" id="campusError"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="staffFields" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="staffId">Staff ID *</label>
+                                <input type="text" id="staffId" name="staffId" 
+                                       placeholder="Enter your staff ID">
+                                <div class="form-error" id="staffIdError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="department">Department *</label>
+                                <input type="text" id="department" name="department" 
+                                       placeholder="Enter your department">
+                                <div class="form-error" id="departmentError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="position">Position/Role *</label>
+                            <input type="text" id="position" name="position" 
+                                   placeholder="Enter your position">
+                            <div class="form-error" id="positionError"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password">Password *</label>
+                            <div style="position: relative;">
+                                <input type="password" id="password" name="password" required 
+                                       placeholder="Create a password">
+                                <i class="fas fa-eye toggle-password" 
+                                   style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                            <div class="form-error" id="passwordError"></div>
+                            <small style="color: #666; font-size: 0.85rem;">Must be at least 8 characters</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password *</label>
+                            <div style="position: relative;">
+                                <input type="password" id="confirmPassword" name="confirmPassword" required 
+                                       placeholder="Confirm your password">
+                                <i class="fas fa-eye toggle-password" 
+                                   style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                            </div>
+                            <div class="form-error" id="confirmPasswordError"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="form-group">
+                        <label for="bio">Bio (Optional)</label>
+                        <textarea id="bio" name="bio" rows="3" 
+                                  placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    
+                    <!-- Terms Agreement -->
+                    <div class="terms-agreement">
+                        <label class="checkbox">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span>I agree to the CampConnect <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *</span>
+                        </label>
+                        <p>By creating an account, you agree to our community guidelines and understand that your information will be used as described in our Privacy Policy.</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary btn-block">Create Account</button>
+                    
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html">Login here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CampConnect</h3>
+                    <p>Bridging communication gaps in educational institutions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="index.html#features">Features</a>
+                    <a href="index.html#about">About Us</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CampConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // User type toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentBtn = document.querySelector('.user-type-btn[data-type="student"]');
+            const staffBtn = document.querySelector('.user-type-btn[data-type="staff"]');
+            const studentFields = document.getElementById('studentFields');
+            const staffFields = document.getElementById('staffFields');
+            
+            // Make student fields required by default
+            if (studentFields) {
+                const studentInputs = studentFields.querySelectorAll('input, select');
+                studentInputs.forEach(input => {
+                    input.required = true;
+                });
+            }
+            
+            if (studentBtn && staffBtn) {
+                studentBtn.addEventListener('click', function() {
+                    studentFields.style.display = 'block';
+                    staffFields.style.display = 'none';
+                    
+                    // Set required fields
+                    const studentInputs = studentFields.querySelectorAll('input, select');
+                    const staffInputs = staffFields.querySelectorAll('input, select');
+                    
+                    studentInputs.forEach(input => input.required = true);
+                    staffInputs.forEach(input => input.required = false);
+                });
+                
+                staffBtn.addEventListener('click', function() {
+                    studentFields.style.display = 'none';
+                    staffFields.style.display = 'block';
+                    
+                    // Set required fields
+                    const studentInputs = studentFields.querySelectorAll('input, select');
+                    const staffInputs = staffFields.querySelectorAll('input, select');
+                    
+                    studentInputs.forEach(input => input.required = false);
+                    staffInputs.forEach(input => input.required = true);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
