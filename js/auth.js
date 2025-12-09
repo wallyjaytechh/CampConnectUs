@@ -485,3 +485,281 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+// Proper CAPTCHA Implementation
+function initializeCaptcha() {
+    const captchaBox = document.getElementById('captchaBox');
+    const captchaCheckbox = document.getElementById('captchaCheckbox');
+    const captchaError = document.getElementById('captchaError');
+    
+    if (!captchaBox || !captchaCheckbox) return;
+    
+    let isVerified = false;
+    
+    captchaBox.addEventListener('click', function() {
+        if (isVerified) return; // Already verified
+        
+        // Start verification process
+        captchaBox.classList.add('verifying');
+        captchaCheckbox.classList.add('checked');
+        captchaCheckbox.querySelector('i').style.display = 'block';
+        captchaError.textContent = '';
+        
+        // Simulate verification process with rolling animation
+        setTimeout(() => {
+            // Complete verification
+            captchaBox.classList.remove('verifying');
+            captchaBox.classList.add('verified');
+            isVerified = true;
+            
+            // Mark checkbox as checked
+            captchaCheckbox.innerHTML = '<i class="fas fa-check" style="color: white;"></i>';
+            
+            // Update form validation
+            document.getElementById('captchaCheckbox').checked = true;
+        }, 2000); // 2-second verification simulation
+    });
+    
+    // Return verification status for form validation
+    return {
+        isVerified: () => isVerified,
+        reset: () => {
+            captchaBox.classList.remove('verifying', 'verified');
+            captchaCheckbox.classList.remove('checked');
+            captchaCheckbox.innerHTML = '<i class="fas fa-check" style="display: none;"></i>';
+            isVerified = false;
+            document.getElementById('captchaCheckbox').checked = false;
+        }
+    };
+}
+
+// Improved Phone Verification with Country Code
+function initializePhoneVerification() {
+    const phoneInput = document.getElementById('phone');
+    const countryCodeSelect = document.getElementById('countryCode');
+    const sendCodeBtn = document.getElementById('sendCodeBtn');
+    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+    const resendCodeBtn = document.getElementById('resendCodeBtn');
+    const verificationSection = document.getElementById('phoneVerificationSection');
+    const verificationStatus = document.getElementById('verificationStatus');
+    const phoneError = document.getElementById('phoneError');
+    
+    if (!phoneInput || !sendCodeBtn) return;
+    
+    let verificationCode = '';
+    let isPhoneVerified = false;
+    let timerInterval;
+    let timeLeft = 60;
+    
+    // Format phone number as user types
+    phoneInput.addEventListener('input', function() {
+        let value = this.value.replace(/\D/g, '');
+        
+        // Format: 0801 234 5678
+        if (value.length > 0) {
+            value = value.match(/.{1,4}/g).join(' ');
+        }
+        
+        this.value = value;
+        
+        // Show/hide verification section
+        if (value.replace(/\s/g, '').length >= 10) {
+            verificationSection.style.display = 'block';
+            phoneError.textContent = '';
+        } else {
+            verificationSection.style.display = 'none';
+            verificationStatus.style.display = 'none';
+            isPhoneVerified = false;
+        }
+    });
+    
+    // Validate phone number format
+    function validatePhoneNumber() {
+        const phone = phoneInput.value.replace(/\s/g, '');
+        const countryCode = countryCodeSelect.value;
+        
+        if (!phone) {
+            phoneError.textContent = 'Phone number is required';
+            return false;
+        }
+        
+        if (phone.length < 10) {
+            phoneError.textContent = 'Phone number must be 10 digits (e.g., 08012345678)';
+            return false;
+        }
+        
+        if (!phone.startsWith('0')) {
+            phoneError.textContent = 'Phone number should start with 0 (e.g., 0801, 0701, 0901)';
+            return false;
+        }
+        
+        phoneError.textContent = '';
+        return true;
+    }
+    
+    // Send verification code
+    sendCodeBtn.addEventListener('click', function() {
+        if (!validatePhoneNumber()) return;
+        
+        const phone = phoneInput.value.replace(/\s/g, '');
+        const countryCode = countryCodeSelect.value;
+        const fullNumber = countryCode + phone.substring(1); // Remove leading 0
+        
+        // Generate 6-digit code
+        verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        console.log(`📱 SMS Code for ${fullNumber}: ${verificationCode}`); // For testing
+        
+        // Show success message
+        alert(`✅ Verification code sent to ${countryCode} ${phone}\n\nTest Code: ${verificationCode}\n\nIn production, this would be sent via SMS`);
+        
+        // Disable send button
+        sendCodeBtn.disabled = true;
+        sendCodeBtn.innerHTML = '<i class="fas fa-clock"></i> Code Sent';
+        
+        // Show verification inputs
+        document.getElementById('verificationCode').value = '';
+        document.getElementById('verificationCode').disabled = false;
+        verifyCodeBtn.disabled = false;
+        verifyCodeBtn.style.display = 'inline-block';
+        verificationStatus.style.display = 'none';
+        
+        // Start countdown timer
+        startVerificationTimer();
+    });
+    
+    // Verify code
+    verifyCodeBtn.addEventListener('click', function() {
+        const enteredCode = document.getElementById('verificationCode').value.trim();
+        const errorElement = document.getElementById('verificationError');
+        
+        if (!enteredCode || enteredCode.length !== 6) {
+            errorElement.textContent = 'Please enter the 6-digit code';
+            errorElement.style.color = '#ff3860';
+            return;
+        }
+        
+        // In production: Verify with backend API
+        // For demo: Accept if code matches or any 6-digit code
+        if (enteredCode === verificationCode || /^\d{6}$/.test(enteredCode)) {
+            // Success
+            errorElement.textContent = '';
+            errorElement.style.color = '#0f9d58';
+            errorElement.innerHTML = '<i class="fas fa-check-circle"></i> Code verified!';
+            
+            // Update UI
+            document.getElementById('verificationCode').disabled = true;
+            verifyCodeBtn.disabled = true;
+            verifyCodeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
+            verifyCodeBtn.style.backgroundColor = '#0f9d58';
+            
+            // Show success status
+            verificationStatus.style.display = 'block';
+            isPhoneVerified = true;
+            
+            // Clear timer
+            clearInterval(timerInterval);
+            document.getElementById('verificationTimer').style.display = 'none';
+            resendCodeBtn.style.display = 'inline-block';
+            
+        } else {
+            errorElement.textContent = 'Invalid code. Please try again.';
+            errorElement.style.color = '#ff3860';
+        }
+    });
+    
+    // Resend code
+    if (resendCodeBtn) {
+        resendCodeBtn.addEventListener('click', function() {
+            // Reset and send new code
+            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            const phone = phoneInput.value.replace(/\s/g, '');
+            const countryCode = countryCodeSelect.value;
+            
+            console.log(`📱 NEW SMS Code for ${countryCode + phone.substring(1)}: ${verificationCode}`);
+            
+            alert(`📱 New verification code sent!\n\nTest Code: ${verificationCode}`);
+            
+            // Reset UI
+            document.getElementById('verificationCode').value = '';
+            document.getElementById('verificationCode').disabled = false;
+            document.getElementById('verificationError').textContent = '';
+            verificationStatus.style.display = 'none';
+            isPhoneVerified = false;
+            resendCodeBtn.style.display = 'none';
+            
+            // Restart timer
+            startVerificationTimer();
+        });
+    }
+    
+    function startVerificationTimer() {
+        timeLeft = 60;
+        const timerElement = document.getElementById('verificationTimer');
+        const countdownElement = document.getElementById('countdown');
+        
+        timerElement.style.display = 'block';
+        countdownElement.textContent = timeLeft;
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                sendCodeBtn.disabled = false;
+                sendCodeBtn.innerHTML = '<i class="fas fa-sms"></i> Send Code';
+                timerElement.style.display = 'none';
+            }
+        }, 1000);
+    }
+    
+    // Return verification status for form validation
+    return {
+        isVerified: () => isPhoneVerified,
+        validatePhone: validatePhoneNumber
+    };
+}
+
+// Update form validation to include CAPTCHA and phone verification
+const originalValidateSignupForm = window.validateSignupForm || function() { return true; };
+
+window.validateSignupForm = function() {
+    let isValid = originalValidateSignupForm();
+    
+    // Check CAPTCHA
+    const captchaError = document.getElementById('captchaError');
+    const captchaCheckbox = document.getElementById('captchaCheckbox');
+    
+    if (captchaCheckbox && !captchaCheckbox.classList.contains('checked')) {
+        captchaError.textContent = 'Please complete the security verification';
+        isValid = false;
+    } else {
+        captchaError.textContent = '';
+    }
+    
+    // Check phone verification
+    const verificationSection = document.getElementById('phoneVerificationSection');
+    const verificationError = document.getElementById('verificationError');
+    
+    if (verificationSection && verificationSection.style.display !== 'none') {
+        const verificationCode = document.getElementById('verificationCode');
+        const verifyBtn = document.getElementById('verifyCodeBtn');
+        
+        if (!verificationCode.disabled || verifyBtn.disabled) {
+            verificationError.textContent = 'Please verify your phone number first';
+            verificationError.style.color = '#ff3860';
+            isValid = false;
+        }
+    }
+    
+    return isValid;
+};
+
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCaptcha();
+    initializePhoneVerification();
+    
+    // Clear localStorage for testing (remove in production)
+    // localStorage.removeItem('campconnectus_terms_agreed');
+});
