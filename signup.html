@@ -93,27 +93,47 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" required 
-                               placeholder="Enter your phone number">
-                        <div class="form-error" id="phoneError"></div>
-                    </div>
-                    
-                    <!-- Phone Verification -->
-<div class="form-group" id="phoneVerificationSection" style="display: none;">
-    <label for="verificationCode">Verification Code *</label>
-    <div class="verification-input-group">
-        <input type="text" id="verificationCode" name="verificationCode" 
-               placeholder="Enter 6-digit code" maxlength="6">
-        <button type="button" class="btn-verify" id="sendCodeBtn">
+    <label for="phone">Phone Number *</label>
+    <div class="phone-input-group">
+        <div class="country-code">
+            <select id="countryCode" name="countryCode">
+                <option value="+234" selected>+234 (NG)</option>
+                <option value="+1">+1 (US)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+233">+233 (GH)</option>
+                <option value="+254">+254 (KE)</option>
+            </select>
+        </div>
+        <input type="tel" id="phone" name="phone" required 
+               placeholder="801 234 5678" pattern="[0-9]{10}">
+        <button type="button" class="btn-send-code" id="sendCodeBtn">
             <i class="fas fa-sms"></i> Send Code
         </button>
-        <button type="button" class="btn-verify" id="verifyCodeBtn" style="display: none;">
-            <i class="fas fa-check"></i> Verify
+    </div>
+    <small style="color: #666; display: block; margin-top: 5px;">
+        Format: +234 801 234 5678 (without the +234, start with 0)
+    </small>
+    <div class="form-error" id="phoneError"></div>
+</div>
+
+<!-- Phone Verification -->
+<div class="form-group" id="phoneVerificationSection" style="display: none;">
+    <label for="verificationCode">Enter 6-digit Code *</label>
+    <div class="verification-input-group">
+        <input type="text" id="verificationCode" name="verificationCode" 
+               placeholder="Enter code from SMS" maxlength="6" pattern="[0-9]{6}">
+        <button type="button" class="btn-verify" id="verifyCodeBtn">
+            <i class="fas fa-check"></i> Verify Code
+        </button>
+        <button type="button" class="btn-resend" id="resendCodeBtn" style="display: none;">
+            <i class="fas fa-redo"></i> Resend
         </button>
     </div>
     <div class="form-error" id="verificationError"></div>
-    <small id="verificationTimer" style="display: none; color: #666;">
+    <div id="verificationStatus" style="display: none; color: #0f9d58; margin-top: 5px;">
+        <i class="fas fa-check-circle"></i> Phone number verified!
+    </div>
+    <small id="verificationTimer" style="display: none; color: #666; margin-top: 5px;">
         Resend code in: <span id="countdown">60</span> seconds
     </small>
 </div>
