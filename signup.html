@@ -251,21 +251,35 @@
                         <textarea id="bio" name="bio" rows="3" 
                                   placeholder="Tell us about yourself..."></textarea>
                     </div>
-                    <!-- CAPTCHA (I'm not a robot) -->
+                    <!-- Proper CAPTCHA (I'm not a robot) -->
 <div class="form-group" id="captchaSection">
-    <label>Confirm you're not a robot *</label>
-    <div class="captcha-box" id="captchaBox">
-        <div class="captcha-checkbox">
-            <input type="checkbox" id="captchaCheckbox">
-            <label for="captchaCheckbox">
-                <i class="fas fa-robot" id="robotIcon"></i>
-                <span>I'm not a robot</span>
-            </label>
-        </div>
-        <div class="captcha-logo">
-            <i class="fas fa-shield-alt"></i>
-            <span>reCAPTCHA</span>
-            <small>Privacy - Terms</small>
+    <label>Security Verification *</label>
+    <div class="captcha-container">
+        <div class="captcha-wrapper" id="captchaBox">
+            <div class="captcha-checkbox-area">
+                <div class="captcha-checkbox" id="captchaCheckbox">
+                    <i class="fas fa-check" style="display: none;"></i>
+                </div>
+                <div class="captcha-text">I'm not a robot</div>
+            </div>
+            
+            <div class="captcha-loading">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Verifying...</div>
+            </div>
+            
+            <div class="captcha-success">
+                <i class="fas fa-check-circle"></i>
+                <div>Verification complete!</div>
+            </div>
+            
+            <div class="captcha-logo-area">
+                <div class="captcha-privacy">
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="terms-of-service.html">Terms</a>
+                </div>
+                <div>reCAPTCHA</div>
+            </div>
         </div>
     </div>
     <div class="form-error" id="captchaError"></div>
