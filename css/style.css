@@ -328,3 +328,290 @@ footer {
     color: #bbb;
     font-size: 0.9rem;
 }
+
+/* Auth Pages Styles */
+.auth-section {
+    padding: 120px 0 80px;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #666;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.auth-form input,
+.auth-form select,
+.auth-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.auth-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.auth-form textarea:focus {
+    outline: none;
+    border-color: #1877f2;
+}
+
+.form-error {
+    color: #ff3860;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox input {
+    margin-right: 8px;
+    width: auto;
+}
+
+.forgot-password {
+    color: #1877f2;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: #666;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.auth-divider span {
+    padding: 0 15px;
+}
+
+.social-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.social-btn i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.social-btn.google:hover {
+    border-color: #DB4437;
+    color: #DB4437;
+}
+
+.social-btn.facebook:hover {
+    border-color: #1877f2;
+    color: #1877f2;
+}
+
+.auth-footer {
+    text-align: center;
+    color: #666;
+}
+
+.auth-footer a {
+    color: #1877f2;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Signup Specific Styles */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.profile-upload {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 3px solid #1877f2;
+    overflow: hidden;
+    position: relative;
+    background-color: #f0f2f5;
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+}
+
+.upload-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #1877f2;
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #1877f2;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+    background-color: #166fe5;
+}
+
+.upload-btn input[type="file"] {
+    display: none;
+}
+
+.user-type-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.user-type-btn {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.user-type-btn.active {
+    border-color: #1877f2;
+    background-color: #f0f5ff;
+    color: #1877f2;
+}
+
+.user-type-btn i {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.terms-agreement {
+    margin: 25px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #1877f2;
+}
+
+.terms-agreement .checkbox {
+    margin-bottom: 10px;
+}
+
+.terms-agreement p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
