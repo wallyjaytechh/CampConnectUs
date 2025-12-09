@@ -164,3 +164,71 @@
         margin-bottom: 15px;
     }
 }
+
+/* Safari Specific Fixes */
+@media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+        /* Fix for flexbox in Safari */
+        .about-content {
+            display: -webkit-flex;
+            display: flex;
+        }
+        
+        /* Fix for grid in Safari */
+        .contact-grid {
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 1fr 1fr 1fr 1fr;
+        }
+        
+        /* Fix for smooth scrolling */
+        html {
+            scroll-behavior: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Fix for button appearances */
+        button, 
+        .btn-primary, 
+        .btn-secondary,
+        .social-btn {
+            -webkit-appearance: none;
+            border-radius: 25px;
+        }
+        
+        /* Fix for image rendering */
+        img {
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+        }
+    }
+}
+
+/* iPhone Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .contact-card,
+    .feature-card {
+        -webkit-transform: translateZ(0);
+    }
+    
+    /* Prevent text size adjustment */
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    /* Fix for 100vh issue on iOS */
+    .auth-section {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Safari 10+ specific */
+@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    .hero {
+        -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+    
+    .contact-icon i {
+        -webkit-font-smoothing: antialiased;
+    }
+}
