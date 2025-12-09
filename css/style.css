@@ -966,3 +966,121 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
         max-width: none;
     }
 }
+/* Phone Verification Styles */
+.verification-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.verification-input-group input {
+    flex: 1;
+}
+
+.btn-verify {
+    padding: 12px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-verify:hover {
+    background-color: #166fe5;
+}
+
+.btn-verify:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* CAPTCHA Styles */
+.captcha-box {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.captcha-box.verified {
+    border-color: #4CAF50;
+    background-color: #f0fff0;
+}
+
+.captcha-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.captcha-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.captcha-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+}
+
+#robotIcon {
+    font-size: 24px;
+    color: #666;
+}
+
+.captcha-box.verified #robotIcon {
+    color: #4CAF50;
+}
+
+.captcha-logo {
+    text-align: right;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.captcha-logo i {
+    font-size: 20px;
+    color: #1877f2;
+    margin-bottom: 5px;
+}
+
+.captcha-logo small {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Date of Birth field styling */
+input[type="date"] {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .verification-input-group {
+        flex-direction: column;
+    }
+    
+    .captcha-box {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .captcha-logo {
+        text-align: center;
+    }
+}
