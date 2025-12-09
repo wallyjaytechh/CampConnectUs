@@ -997,70 +997,129 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
     cursor: not-allowed;
 }
 
-/* CAPTCHA Styles */
-.captcha-box {
+/* Proper CAPTCHA Styles */
+.captcha-container {
+    margin: 20px 0;
+}
+
+.captcha-wrapper {
     border: 2px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 4px;
+    padding: 15px;
+    background: #f9f9f9;
+    width: 100%;
+    max-width: 350px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.captcha-box.verified {
-    border-color: #4CAF50;
-    background-color: #f0fff0;
+.captcha-wrapper.verifying {
+    border-color: #4285f4;
+    background: #f8f9ff;
+}
+
+.captcha-wrapper.verified {
+    border-color: #0f9d58;
+    background: #f0fff4;
+}
+
+.captcha-checkbox-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .captcha-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+    background: white;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
-.captcha-checkbox input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
+.captcha-checkbox.checked {
+    border-color: #0f9d58;
+    background: #0f9d58;
 }
 
-.captcha-checkbox label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+.captcha-checkbox.checked i {
+    color: white;
+    font-size: 16px;
+}
+
+.captcha-text {
+    font-size: 16px;
     font-weight: 500;
     color: #333;
 }
 
-#robotIcon {
-    font-size: 24px;
-    color: #666;
+.captcha-loading {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.captcha-box.verified #robotIcon {
-    color: #4CAF50;
+.captcha-wrapper.verifying .captcha-loading {
+    display: flex;
 }
 
-.captcha-logo {
-    text-align: right;
-    color: #666;
-    font-size: 0.9rem;
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4285f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
-.captcha-logo i {
+.loading-text {
+    color: #4285f4;
+    font-size: 14px;
+}
+
+.captcha-success {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    color: #0f9d58;
+}
+
+.captcha-wrapper.verified .captcha-success {
+    display: flex;
+}
+
+.captcha-success i {
     font-size: 20px;
-    color: #1877f2;
-    margin-bottom: 5px;
 }
 
-.captcha-logo small {
-    display: block;
-    font-size: 0.8rem;
-    color: #888;
+.captcha-logo-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #666;
+}
+
+.captcha-privacy {
+    display: flex;
+    gap: 10px;
+}
+
+.captcha-privacy a {
+    color: #4285f4;
+    text-decoration: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Date of Birth field styling */
@@ -1068,19 +1127,104 @@ input[type="date"] {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Phone Input with Country Code */
+.phone-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.country-code select {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+.phone-input-group input {
+    flex: 1;
+}
+
+.btn-send-code {
+    padding: 12px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+
+.btn-send-code:hover {
+    background-color: #166fe5;
+}
+
+.btn-send-code:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-resend {
+    padding: 12px 20px;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Verification styles */
+.verification-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.verification-input-group input {
+    flex: 1;
+}
+
+.btn-verify {
+    padding: 12px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-verify:hover {
+    background-color: #166fe5;
+}
+
+.btn-verify:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .phone-input-group,
     .verification-input-group {
         flex-direction: column;
     }
     
-    .captcha-box {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
+    .country-code select {
+        width: 100%;
     }
     
-    .captcha-logo {
-        text-align: center;
+    .btn-send-code,
+    .btn-verify,
+    .btn-resend {
+        width: 100%;
     }
 }
