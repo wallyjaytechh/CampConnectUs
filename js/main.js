@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-// Terms Agreement Banner
+// Terms Agreement Banner - FIXED VERSION
 document.addEventListener('DOMContentLoaded', function() {
     const termsBanner = document.getElementById('termsBanner');
     const acceptBtn = document.getElementById('acceptTerms');
@@ -156,42 +156,64 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check if user has already agreed to terms
     const hasAgreed = localStorage.getItem('campconnectus_terms_agreed');
+    const hasDeclined = localStorage.getItem('campconnectus_terms_declined');
     
-    if (!hasAgreed) {
-        // Show banner after 1 second delay
+    // Show banner only if user hasn't made a choice
+    if (!hasAgreed && !hasDeclined) {
+        // Small delay to let page load
         setTimeout(() => {
-            termsBanner.classList.add('active');
-        }, 1000);
+            if (termsBanner) {
+                termsBanner.classList.add('active');
+                console.log('Terms banner shown');
+            }
+        }, 1500);
     }
     
     // Accept terms
     if (acceptBtn) {
-        acceptBtn.addEventListener('click', function() {
+        acceptBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             localStorage.setItem('campconnectus_terms_agreed', 'true');
             localStorage.setItem('campconnectus_terms_date', new Date().toISOString());
-            termsBanner.classList.remove('active');
             
-            // Optional: Send analytics or confirmation
-            console.log('User accepted terms');
+            if (termsBanner) {
+                termsBanner.classList.remove('active');
+                termsBanner.style.display = 'none';
+            }
+            
+            console.log('Terms accepted');
+            
+            // Optional success message
+            // alert('Thank you for accepting our terms!');
         });
     }
     
     // Decline terms
     if (declineBtn) {
-        declineBtn.addEventListener('click', function() {
-            // Store that user declined
+        declineBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             localStorage.setItem('campconnectus_terms_declined', 'true');
-            termsBanner.classList.remove('active');
             
-            // Show message or redirect
-            alert('To use CampConnectUs, you must accept our Terms of Service and Privacy Policy.');
+            if (termsBanner) {
+                termsBanner.classList.remove('active');
+                termsBanner.style.display = 'none';
+            }
             
-            // Optional: Redirect to terms page
-            // window.location.href = 'terms-of-service.html';
+            // Show decline message
+            alert('To use CampConnectUs, you must accept our Terms of Service and Privacy Policy. Redirecting to Terms page...');
+            
+            // Redirect to terms page
+            setTimeout(() => {
+                window.location.href = 'terms-of-service.html';
+            }, 1000);
         });
     }
     
-    // Clear agreement (for testing purposes - remove in production)
+    // For testing: Clear storage
     // localStorage.removeItem('campconnectus_terms_agreed');
     // localStorage.removeItem('campconnectus_terms_declined');
 });
