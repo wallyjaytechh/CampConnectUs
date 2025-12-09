@@ -1,4 +1,4 @@
-# CampConnect - Campus Communication Platform
+# CampConnectUs - Campus Communication Platform
 
 A modern, responsive web platform that combines WhatsApp-like messaging with Facebook-like social networking for educational institutions. Built for both students and staff.
 
