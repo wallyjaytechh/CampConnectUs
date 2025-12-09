@@ -798,3 +798,126 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
         vertical-align: top;
     }
 }
+/* Privacy Policy & Terms Pages */
+.policy-section {
+    padding: 120px 0 80px;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+.policy-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.policy-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.last-updated {
+    color: #666;
+    font-style: italic;
+}
+
+.policy-content {
+    background: white;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.policy-intro {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.policy-intro p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+}
+
+.policy-section-item {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.policy-section-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.policy-section-item h2 {
+    color: #1877f2;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.policy-section-item h3 {
+    color: #333;
+    margin: 20px 0 10px;
+    font-size: 1.2rem;
+}
+
+.policy-section-item p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.policy-section-item ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.policy-section-item li {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 10px;
+}
+
+.policy-section-item li:before {
+    content: "•";
+    color: #1877f2;
+    position: absolute;
+    left: -10px;
+}
+
+.policy-acknowledgment {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f0f5ff;
+    border-radius: 10px;
+    border-left: 4px solid #1877f2;
+}
+
+.policy-acknowledgment p {
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Responsive for Policy Pages */
+@media (max-width: 768px) {
+    .policy-section {
+        padding: 100px 0 40px;
+    }
+    
+    .policy-header h1 {
+        font-size: 2rem;
+    }
+    
+    .policy-content {
+        padding: 30px 20px;
+    }
+    
+    .policy-section-item h2 {
+        font-size: 1.3rem;
+    }
+}
