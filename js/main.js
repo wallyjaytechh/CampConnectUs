@@ -148,45 +148,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-// Terms Agreement Banner - FIXED VERSION
+// Terms Agreement Modal - FIXED VERSION
 document.addEventListener('DOMContentLoaded', function() {
-    const termsBanner = document.getElementById('termsBanner');
-    const acceptBtn = document.getElementById('acceptTerms');
-    const declineBtn = document.getElementById('declineTerms');
+    const termsModal = document.getElementById('termsModal');
+    const acceptBtn = document.getElementById('acceptTermsModal');
+    const declineBtn = document.getElementById('declineTermsModal');
     
-    // Check if user has already agreed to terms
+    // Check if user has already agreed
     const hasAgreed = localStorage.getItem('campconnectus_terms_agreed');
     const hasDeclined = localStorage.getItem('campconnectus_terms_declined');
     
-    // Show banner only if user hasn't made a choice
+    // Show modal only if user hasn't made a choice
     if (!hasAgreed && !hasDeclined) {
         // Small delay to let page load
         setTimeout(() => {
-            if (termsBanner) {
-                termsBanner.classList.add('active');
-                console.log('Terms banner shown');
+            if (termsModal) {
+                termsModal.classList.add('active');
+                // Prevent scrolling when modal is open
+                document.body.style.overflow = 'hidden';
+                console.log('Terms modal shown');
             }
-        }, 1500);
+        }, 1000); // 1 second delay
     }
     
     // Accept terms
     if (acceptBtn) {
         acceptBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
             
             localStorage.setItem('campconnectus_terms_agreed', 'true');
             localStorage.setItem('campconnectus_terms_date', new Date().toISOString());
             
-            if (termsBanner) {
-                termsBanner.classList.remove('active');
-                termsBanner.style.display = 'none';
+            if (termsModal) {
+                termsModal.classList.remove('active');
+                // Restore scrolling
+                document.body.style.overflow = 'auto';
             }
             
             console.log('Terms accepted');
-            
-            // Optional success message
-            // alert('Thank you for accepting our terms!');
+            // Optional: Show welcome message
+            // alert('Welcome to CampConnectUs! 🎉');
         });
     }
     
@@ -194,26 +195,40 @@ document.addEventListener('DOMContentLoaded', function() {
     if (declineBtn) {
         declineBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
             
             localStorage.setItem('campconnectus_terms_declined', 'true');
             
-            if (termsBanner) {
-                termsBanner.classList.remove('active');
-                termsBanner.style.display = 'none';
+            if (termsModal) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
             
-            // Show decline message
-            alert('To use CampConnectUs, you must accept our Terms of Service and Privacy Policy. Redirecting to Terms page...');
+            // More prominent decline message
+            const declineConfirmed = confirm('⚠️ IMPORTANT: You must accept our Terms of Service and Privacy Policy to use CampConnectUs.\n\nClick "OK" to review our terms, or "Cancel" to leave the site.');
             
-            // Redirect to terms page
-            setTimeout(() => {
+            if (declineConfirmed) {
+                // Redirect to terms page
                 window.location.href = 'terms-of-service.html';
-            }, 1000);
+            } else {
+                // Optional: Redirect to home or external page
+                // window.location.href = 'https://google.com';
+            }
         });
     }
     
-    // For testing: Clear storage
+    // Close modal if clicked outside content
+    if (termsModal) {
+        termsModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                // Optional: Prevent closing by clicking outside
+                // Uncomment to allow closing by clicking outside
+                // this.classList.remove('active');
+                // document.body.style.overflow = 'auto';
+            }
+        });
+    }
+    
+    // For testing: Clear storage (remove in production)
     // localStorage.removeItem('campconnectus_terms_agreed');
     // localStorage.removeItem('campconnectus_terms_declined');
 });
