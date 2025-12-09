@@ -99,71 +99,125 @@
                         <div class="form-error" id="phoneError"></div>
                     </div>
                     
+                    <!-- Phone Verification -->
+<div class="form-group" id="phoneVerificationSection" style="display: none;">
+    <label for="verificationCode">Verification Code *</label>
+    <div class="verification-input-group">
+        <input type="text" id="verificationCode" name="verificationCode" 
+               placeholder="Enter 6-digit code" maxlength="6">
+        <button type="button" class="btn-verify" id="sendCodeBtn">
+            <i class="fas fa-sms"></i> Send Code
+        </button>
+        <button type="button" class="btn-verify" id="verifyCodeBtn" style="display: none;">
+            <i class="fas fa-check"></i> Verify
+        </button>
+    </div>
+    <div class="form-error" id="verificationError"></div>
+    <small id="verificationTimer" style="display: none; color: #666;">
+        Resend code in: <span id="countdown">60</span> seconds
+    </small>
+</div>
                     <!-- Student/Staff Specific Fields -->
                     <div id="studentFields">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="studentId">Student ID *</label>
-                                <input type="text" id="studentId" name="studentId" required 
-                                       placeholder="Enter your student ID">
-                                <div class="form-error" id="studentIdError"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="major">Major/Program *</label>
-                                <input type="text" id="major" name="major" required 
-                                       placeholder="Enter your major">
-                                <div class="form-error" id="majorError"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="year">Year of Study *</label>
-                                <select id="year" name="year" required>
-                                    <option value="">Select year</option>
-                                    <option value="1">First Year</option>
-                                    <option value="2">Second Year</option>
-                                    <option value="3">Third Year</option>
-                                    <option value="4">Fourth Year</option>
-                                    <option value="5">Fifth Year+</option>
-                                </select>
-                                <div class="form-error" id="yearError"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="campus">Campus *</label>
-                                <input type="text" id="campus" name="campus" required 
-                                       placeholder="Enter your campus">
-                                <div class="form-error" id="campusError"></div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="studentId">Student ID *</label>
+            <input type="text" id="studentId" name="studentId" required 
+                   placeholder="Enter your student ID">
+            <div class="form-error" id="studentIdError"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="faculty">Faculty *</label>
+            <select id="faculty" name="faculty" required>
+                <option value="">Select Faculty</option>
+                <option value="arts">Faculty of Arts</option>
+                <option value="science">Faculty of Science</option>
+                <option value="engineering">Faculty of Engineering</option>
+                <option value="medicine">Faculty of Medicine</option>
+                <option value="law">Faculty of Law</option>
+                <option value="social_sciences">Faculty of Social Sciences</option>
+                <option value="education">Faculty of Education</option>
+                <option value="business">Faculty of Business</option>
+                <option value="other">Other Faculty</option>
+            </select>
+            <div class="form-error" id="facultyError"></div>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group">
+            <label for="department">Department *</label>
+            <input type="text" id="department" name="department" required 
+                   placeholder="e.g., Psychology, Economics, Computer Science">
+            <div class="form-error" id="departmentError"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="year">Year of Study *</label>
+            <select id="year" name="year" required>
+                <option value="">Select year</option>
+                <option value="1">First Year</option>
+                <option value="2">Second Year</option>
+                <option value="3">Third Year</option>
+                <option value="4">Fourth Year</option>
+                <option value="5">Fifth Year</option>
+                <option value="6">Sixth Year+</option>
+            </select>
+            <div class="form-error" id="yearError"></div>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group">
+            <label for="dateOfBirth">Date of Birth *</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" required 
+                   max="2008-12-31">
+            <div class="form-error" id="dateOfBirthError"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="campus">Campus *</label>
+            <input type="text" id="campus" name="campus" required 
+                   placeholder="Enter your campus">
+            <div class="form-error" id="campusError"></div>
+        </div>
+    </div>
+</div>
                     
                     <div id="staffFields" style="display: none;">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="staffId">Staff ID *</label>
-                                <input type="text" id="staffId" name="staffId" 
-                                       placeholder="Enter your staff ID">
-                                <div class="form-error" id="staffIdError"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="department">Department *</label>
-                                <input type="text" id="department" name="department" 
-                                       placeholder="Enter your department">
-                                <div class="form-error" id="departmentError"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="position">Position/Role *</label>
-                            <input type="text" id="position" name="position" 
-                                   placeholder="Enter your position">
-                            <div class="form-error" id="positionError"></div>
-                        </div>
-                    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="staffId">Staff ID *</label>
+            <input type="text" id="staffId" name="staffId" 
+                   placeholder="Enter your staff ID">
+            <div class="form-error" id="staffIdError"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="staffFaculty">Faculty/Department *</label>
+            <input type="text" id="staffFaculty" name="staffFaculty" 
+                   placeholder="Enter your faculty/department">
+            <div class="form-error" id="staffFacultyError"></div>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="form-group">
+            <label for="position">Position/Role *</label>
+            <input type="text" id="position" name="position" 
+                   placeholder="Enter your position">
+            <div class="form-error" id="positionError"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="staffDateOfBirth">Date of Birth *</label>
+            <input type="date" id="staffDateOfBirth" name="staffDateOfBirth" 
+                   max="1980-12-31">
+            <div class="form-error" id="staffDateOfBirthError"></div>
+        </div>
+    </div>
+</div>
                     
                     <!-- Password -->
                     <div class="form-row">
@@ -197,7 +251,25 @@
                         <textarea id="bio" name="bio" rows="3" 
                                   placeholder="Tell us about yourself..."></textarea>
                     </div>
-                    
+                    <!-- CAPTCHA (I'm not a robot) -->
+<div class="form-group" id="captchaSection">
+    <label>Confirm you're not a robot *</label>
+    <div class="captcha-box" id="captchaBox">
+        <div class="captcha-checkbox">
+            <input type="checkbox" id="captchaCheckbox">
+            <label for="captchaCheckbox">
+                <i class="fas fa-robot" id="robotIcon"></i>
+                <span>I'm not a robot</span>
+            </label>
+        </div>
+        <div class="captcha-logo">
+            <i class="fas fa-shield-alt"></i>
+            <span>reCAPTCHA</span>
+            <small>Privacy - Terms</small>
+        </div>
+    </div>
+    <div class="form-error" id="captchaError"></div>
+</div>
                     <!-- Terms Agreement -->
                     <div class="terms-agreement">
                         <label class="checkbox">
