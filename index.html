@@ -229,15 +229,36 @@
         </div>
     </footer>
     
-<!-- Terms Agreement Banner -->
-<div class="terms-banner" id="termsBanner">
-    <div class="terms-banner-content">
-        <div class="terms-text">
-            <p>By using CampConnectUs, you agree to our <a href="terms-of-service.html">Terms of Service</a>, <a href="privacy-policy.html">Privacy Policy</a>, and <a href="cookie-policy.html">Cookie Policy</a>. We use cookies to enhance your experience.</p>
+<!-- Terms Agreement Modal -->
+<div class="terms-modal" id="termsModal">
+    <div class="terms-modal-content">
+        <div class="terms-modal-header">
+            <h2>Welcome to CampConnectUs! 🎓</h2>
+            <p>Before you continue, please review our policies</p>
         </div>
-        <div class="terms-buttons">
-            <button class="btn-decline" id="declineTerms">Decline</button>
-            <button class="btn-accept" id="acceptTerms">Accept</button>
+        
+        <div class="terms-modal-body">
+            <p>To provide you with the best campus communication experience, we need your agreement to our terms and policies. This helps us maintain a safe and productive environment for all students and staff.</p>
+            
+            <p>By clicking <strong>"I Agree"</strong>, you confirm that you have read and agree to our:</p>
+            <ul style="text-align: left; margin-left: 20px; color: #333;">
+                <li><a href="terms-of-service.html" target="_blank">Terms of Service</a> - Rules for using our platform</li>
+                <li><a href="privacy-policy.html" target="_blank">Privacy Policy</a> - How we protect your data</li>
+                <li><a href="cookie-policy.html" target="_blank">Cookie Policy</a> - How we use cookies</li>
+            </ul>
+        </div>
+        
+        <div class="terms-modal-buttons">
+            <button class="terms-modal-btn terms-modal-btn-decline" id="declineTermsModal">
+                <i class="fas fa-times"></i> I Decline
+            </button>
+            <button class="terms-modal-btn terms-modal-btn-accept" id="acceptTermsModal">
+                <i class="fas fa-check"></i> I Agree
+            </button>
+        </div>
+        
+        <div class="terms-modal-footer">
+            <p>You must agree to continue using CampConnectUs</p>
         </div>
     </div>
 </div>
