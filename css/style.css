@@ -940,23 +940,25 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
 .policy-section-item a:hover {
     text-decoration: underline;
 }
-/* Terms Agreement Banner */
+/* Terms Agreement Banner - FIXED VERSION */
 .terms-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: rgba(0, 0, 0, 0.95);
     color: white;
-    padding: 20px;
-    z-index: 9999;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    z-index: 99999;
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
     display: none;
+    backdrop-filter: blur(10px);
+    border-top: 3px solid #1877f2;
 }
 
 .terms-banner.active {
     display: block;
-    animation: slideUp 0.5s ease;
+    animation: slideUp 0.4s ease-out;
 }
 
 .terms-banner-content {
@@ -965,7 +967,7 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 25px;
 }
 
 .terms-text {
@@ -974,66 +976,88 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
 
 .terms-text p {
     margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 .terms-text a {
-    color: white;
+    color: #4dabf7;
     text-decoration: underline;
-    font-weight: 500;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.terms-text a:hover {
+    color: #74c0fc;
 }
 
 .terms-buttons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    flex-shrink: 0;
 }
 
 .btn-accept, .btn-decline {
-    padding: 10px 25px;
-    border-radius: 25px;
+    padding: 12px 30px;
+    border-radius: 8px;
     border: none;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    white-space: nowrap;
+    font-size: 15px;
+    min-width: 100px;
 }
 
 .btn-accept {
-    background-color: white;
-    color: #1877f2;
+    background: #1877f2;
+    color: white;
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
 }
 
 .btn-decline {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
+    background: transparent;
+    color: #ccc;
+    border: 2px solid #666;
 }
 
 .btn-accept:hover {
+    background: #166fe5;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4);
 }
 
 .btn-decline:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: #888;
 }
 
 @keyframes slideUp {
     from {
         transform: translateY(100%);
+        opacity: 0;
     }
     to {
         transform: translateY(0);
+        opacity: 1;
     }
 }
 
 /* Mobile responsive for banner */
 @media (max-width: 768px) {
+    .terms-banner {
+        padding: 15px;
+    }
+    
     .terms-banner-content {
         flex-direction: column;
         text-align: center;
         gap: 15px;
+    }
+    
+    .terms-text p {
+        font-size: 14px;
+        margin-bottom: 10px;
     }
     
     .terms-buttons {
@@ -1041,7 +1065,23 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
         justify-content: center;
     }
     
-    .terms-text p {
-        font-size: 0.9rem;
+    .btn-accept, .btn-decline {
+        padding: 12px 25px;
+        min-width: 120px;
+        flex: 1;
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .terms-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    
+    .btn-accept, .btn-decline {
+        width: 100%;
+        max-width: none;
     }
 }
