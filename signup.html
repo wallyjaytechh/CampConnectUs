@@ -92,21 +92,16 @@
                         <div class="form-error" id="emailError"></div>
                     </div>
                     
-                   <div class="form-group">
+                  <div class="form-group">
     <label for="phone">Phone Number </label>
-    <div class="phone-input-container">
-        <div class="phone-prefix">
-            <span>+234</span>
-            <input type="tel" id="phone" name="phone" required 
-                   placeholder="801 234 5678" 
-                   pattern="[0-9]{10}"
-                   title="Enter 10-digit Nigerian number (e.g., 8012345678)">
-        </div>
-        <button type="button" class="send-code-btn" id="sendCodeBtn">
-            <i class="fas fa-paper-plane"></i> Send Verification Code
-        </button>
+    <div class="phone-input-simple">
+        <div class="country-code-display">+234</div>
+        <input type="tel" id="phone" name="phone" required 
+               placeholder="801 234 5678" 
+               pattern="[0-9]{11}"
+               title="Enter 11-digit Nigerian number">
     </div>
-    <small class="phone-hint">Enter your Nigerian number starting with 0 (e.g., 0801, 0701, 0901)</small>
+    <small class="phone-hint">Enter your Nigerian number (e.g., 08012345678)</small>
     <div class="form-error" id="phoneError"></div>
 </div>
 
