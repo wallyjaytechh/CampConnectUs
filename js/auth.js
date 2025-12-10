@@ -302,153 +302,32 @@ if (forgotPasswordLink) {
         }
     });
 }
-// Phone Verification System
-let verificationTimer;
-let timeLeft = 60;
 
-function initializePhoneVerification() {
-    const phoneInput = document.getElementById('phone');
-    const sendCodeBtn = document.getElementById('sendCodeBtn');
-    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
-    const verificationSection = document.getElementById('phoneVerificationSection');
+// Updated form validation for reCAPTCHA v3
+function validateFormBeforeSubmit() {
+    const requiredFields = document.querySelectorAll('#signupForm input[required], #signupForm select[required]');
+    let isValid = true;
     
-    if (!phoneInput || !sendCodeBtn) return;
-    
-    // Show verification section when phone is entered
-    phoneInput.addEventListener('input', function() {
-        if (this.value.trim().length >= 10) {
-            verificationSection.style.display = 'block';
-        } else {
-            verificationSection.style.display = 'none';
-        }
-    });
-    
-    // Send verification code
-    sendCodeBtn.addEventListener('click', function() {
-        const phone = phoneInput.value.trim();
+    requiredFields.forEach(field => {
+        const errorElement = document.getElementById(field.id + 'Error');
+        if (errorElement) errorElement.textContent = '';
+        field.style.borderColor = '#ddd';
         
-        if (!phone || phone.length < 10) {
-            alert('Please enter a valid phone number');
-            return;
-        }
-        
-        // Simulate sending SMS (in real app, connect to SMS API)
-        const fakeCode = Math.floor(100000 + Math.random() * 900000);
-        console.log(`SMS Code for ${phone}: ${fakeCode}`); // For testing
-        
-        alert(`📱 Verification code sent to ${phone}\nTest Code: ${fakeCode}\n(In production, this would be sent via SMS)`);
-        
-        // Disable send button and show timer
-        sendCodeBtn.disabled = true;
-        sendCodeBtn.innerHTML = '<i class="fas fa-clock"></i> Sent';
-        
-        // Show verification input and verify button
-        document.getElementById('verificationCode').style.display = 'block';
-        verifyCodeBtn.style.display = 'inline-block';
-        
-        // Start countdown timer
-        startVerificationTimer();
-    });
-    
-    // Verify code
-    if (verifyCodeBtn) {
-        verifyCodeBtn.addEventListener('click', function() {
-            const enteredCode = document.getElementById('verificationCode').value.trim();
-            
-            if (!enteredCode || enteredCode.length !== 6) {
-                document.getElementById('verificationError').textContent = 'Please enter a valid 6-digit code';
-                return;
+        if (!field.value.trim()) {
+            if (errorElement) {
+                errorElement.textContent = 'This field is required';
             }
-            
-            // In real app, verify with backend
-            // For demo, accept any 6-digit code
-            document.getElementById('verificationError').textContent = '';
-            document.getElementById('verificationError').style.color = '#4CAF50';
-            document.getElementById('verificationError').innerHTML = '<i class="fas fa-check-circle"></i> Phone number verified!';
-            
-            // Disable verification inputs
-            document.getElementById('verificationCode').disabled = true;
-            verifyCodeBtn.disabled = true;
-            verifyCodeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
-            verifyCodeBtn.style.backgroundColor = '#4CAF50';
-            
-            // Clear timer
-            clearInterval(verificationTimer);
-            document.getElementById('verificationTimer').style.display = 'none';
-        });
-    }
-}
-
-function startVerificationTimer() {
-    timeLeft = 60;
-    const timerElement = document.getElementById('verificationTimer');
-    const countdownElement = document.getElementById('countdown');
-    const sendCodeBtn = document.getElementById('sendCodeBtn');
-    
-    timerElement.style.display = 'block';
-    
-    verificationTimer = setInterval(() => {
-        timeLeft--;
-        countdownElement.textContent = timeLeft;
-        
-        if (timeLeft <= 0) {
-            clearInterval(verificationTimer);
-            sendCodeBtn.disabled = false;
-            sendCodeBtn.innerHTML = '<i class="fas fa-sms"></i> Resend Code';
-            timerElement.style.display = 'none';
-        }
-    }, 1000);
-}
-
-// CAPTCHA System
-function initializeCaptcha() {
-    const captchaCheckbox = document.getElementById('captchaCheckbox');
-    const captchaBox = document.getElementById('captchaBox');
-    
-    if (!captchaCheckbox || !captchaBox) return;
-    
-    captchaCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            // Simulate verification process
-            captchaBox.classList.add('verified');
-            document.getElementById('robotIcon').className = 'fas fa-user-check';
-            document.getElementById('robotIcon').style.color = '#4CAF50';
-            
-            // Optional: Add a small delay to simulate checking
-            setTimeout(() => {
-                captchaBox.innerHTML = `
-                    <div style="text-align: center; width: 100%;">
-                        <i class="fas fa-check-circle" style="font-size: 32px; color: #4CAF50;"></i>
-                        <p style="margin-top: 10px; color: #4CAF50; font-weight: 500;">Verification complete!</p>
-                    </div>
-                `;
-            }, 800);
-        } else {
-            captchaBox.classList.remove('verified');
+            field.style.borderColor = '#ff3860';
+            isValid = false;
         }
     });
-}
-
-// Update form validation
-function validateSignupForm() {
-    // ... existing validation code ...
     
-    // Add CAPTCHA validation
-    const captchaCheckbox = document.getElementById('captchaCheckbox');
-    const captchaError = document.getElementById('captchaError');
-    
-    if (captchaCheckbox && !captchaCheckbox.checked) {
-        captchaError.textContent = 'Please confirm you are not a robot';
-        isValid = false;
-    } else {
-        captchaError.textContent = '';
-    }
-    
-    // Add phone verification check
-    const verificationCode = document.getElementById('verificationCode');
-    if (verificationCode && verificationCode.style.display !== 'none') {
-        if (!verificationCode.value.trim() || verificationCode.disabled === false) {
-            document.getElementById('verificationError').textContent = 'Please verify your phone number';
+    // Phone validation (if keeping phone field)
+    const phoneField = document.getElementById('phone');
+    if (phoneField && phoneField.value.trim()) {
+        const phone = phoneField.value.replace(/\s/g, '');
+        if (phone.length !== 11 || !phone.startsWith('0')) {
+            document.getElementById('phoneError').textContent = 'Enter valid 11-digit Nigerian number';
             isValid = false;
         }
     }
@@ -486,52 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Proper CAPTCHA Implementation
-function initializeCaptcha() {
-    const captchaBox = document.getElementById('captchaBox');
-    const captchaCheckbox = document.getElementById('captchaCheckbox');
-    const captchaError = document.getElementById('captchaError');
-    
-    if (!captchaBox || !captchaCheckbox) return;
-    
-    let isVerified = false;
-    
-    captchaBox.addEventListener('click', function() {
-        if (isVerified) return; // Already verified
-        
-        // Start verification process
-        captchaBox.classList.add('verifying');
-        captchaCheckbox.classList.add('checked');
-        captchaCheckbox.querySelector('i').style.display = 'block';
-        captchaError.textContent = '';
-        
-        // Simulate verification process with rolling animation
-        setTimeout(() => {
-            // Complete verification
-            captchaBox.classList.remove('verifying');
-            captchaBox.classList.add('verified');
-            isVerified = true;
-            
-            // Mark checkbox as checked
-            captchaCheckbox.innerHTML = '<i class="fas fa-check" style="color: white;"></i>';
-            
-            // Update form validation
-            document.getElementById('captchaCheckbox').checked = true;
-        }, 2000); // 2-second verification simulation
-    });
-    
-    // Return verification status for form validation
-    return {
-        isVerified: () => isVerified,
-        reset: () => {
-            captchaBox.classList.remove('verifying', 'verified');
-            captchaCheckbox.classList.remove('checked');
-            captchaCheckbox.innerHTML = '<i class="fas fa-check" style="display: none;"></i>';
-            isVerified = false;
-            document.getElementById('captchaCheckbox').checked = false;
-        }
-    };
-}
+
 
 // Basic phone validation for Nigerian numbers
 function validatePhoneNumber() {
