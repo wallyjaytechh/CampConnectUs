@@ -485,6 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
 // Proper CAPTCHA Implementation
 function initializeCaptcha() {
     const captchaBox = document.getElementById('captchaBox');
@@ -763,3 +764,231 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear localStorage for testing (remove in production)
     // localStorage.removeItem('campconnectus_terms_agreed');
 });
+
+// Department-Faculty linking
+function initializeDepartmentFacultyLink() {
+    const facultySelect = document.getElementById('faculty');
+    const departmentSelect = document.getElementById('department');
+    
+    if (!facultySelect || !departmentSelect) return;
+    
+    // When faculty changes, suggest relevant departments
+    facultySelect.addEventListener('change', function() {
+        const faculty = this.value;
+        
+        // Reset all options to visible
+        Array.from(departmentSelect.options).forEach(option => {
+            option.style.display = 'block';
+            option.disabled = false;
+        });
+        
+        // If a specific faculty is selected, show only relevant departments
+        if (faculty && faculty !== 'other_faculty') {
+            Array.from(departmentSelect.options).forEach(option => {
+                if (option.value && option.parentElement.label) {
+                    const optgroup = option.parentElement;
+                    const shouldShow = checkFacultyDepartmentMatch(faculty, optgroup.label);
+                    
+                    if (!shouldShow && option.value !== '' && option.value !== 'other') {
+                        option.style.display = 'none';
+                        option.disabled = true;
+                    }
+                }
+            });
+            
+            // Reset selection if current selection is hidden
+            if (departmentSelect.options[departmentSelect.selectedIndex]?.disabled) {
+                departmentSelect.value = '';
+            }
+        }
+    });
+    
+    function checkFacultyDepartmentMatch(faculty, departmentGroup) {
+        const mapping = {
+            'arts_humanities': ['📚 Arts & Humanities'],
+            'social_sciences': ['🧠 Social Sciences'],
+            'sciences': ['🔬 Sciences'],
+            'engineering': ['⚙️ Engineering'],
+            'medicine': ['🏥 Medicine & Health'],
+            'law': ['⚖️ Law'],
+            'education': ['👨‍🏫 Education'],
+            'business': ['💼 Business & Management'],
+            'agriculture': ['🌱 Agriculture'],
+            'environmental': ['🏙️ Environmental Studies'],
+            'pharmacy': ['🏥 Medicine & Health'],
+            'dentistry': ['🏥 Medicine & Health'],
+            'veterinary': ['🏥 Medicine & Health'],
+            'basic_medical': ['🏥 Medicine & Health'],
+            'clinical_sciences': ['🏥 Medicine & Health'],
+            'pharmaceutical_sciences': ['🏥 Medicine & Health'],
+            'ict': ['💻 ICT & Computing']
+        };
+        
+        return mapping[faculty]?.some(group => departmentGroup.includes(group.replace(/[📚🧠🔬⚙️🏥⚖️👨‍🏫💼🌱🏙️💻]/g, '').trim())) || false;
+    }
+}
+
+// Initialize in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDepartmentFacultyLink();
+});
+// Campus Selection with Custom Input
+function initializeCampusSelection() {
+    const campusSelect = document.getElementById('campus');
+    const customCampusContainer = document.getElementById('customCampusContainer');
+    const customCampusInput = document.getElementById('customCampus');
+    const campusError = document.getElementById('campusError');
+    const customCampusError = document.getElementById('customCampusError');
+    
+    if (!campusSelect) return;
+    
+    // Handle campus selection change
+    campusSelect.addEventListener('change', function() {
+        const selectedValue = this.value;
+        
+        // Reset errors
+        campusError.textContent = '';
+        customCampusError.textContent = '';
+        
+        // Show/hide custom campus input
+        if (selectedValue === 'custom') {
+            customCampusContainer.style.display = 'block';
+            customCampusInput.required = true;
+            customCampusInput.focus();
+        } else {
+            customCampusContainer.style.display = 'none';
+            customCampusInput.required = false;
+            customCampusInput.value = '';
+        }
+    });
+    
+    // Validate campus selection
+    function validateCampus() {
+        const selectedValue = campusSelect.value;
+        
+        if (!selectedValue) {
+            campusError.textContent = 'Please select your institution';
+            return false;
+        }
+        
+        if (selectedValue === 'custom') {
+            const customName = customCampusInput.value.trim();
+            if (!customName) {
+                customCampusError.textContent = 'Please enter your institution name';
+                return false;
+            }
+            
+            if (customName.length < 3) {
+                customCampusError.textContent = 'Institution name is too short';
+                return false;
+            }
+            
+            // Update the campus select value to custom input
+            campusSelect.value = 'custom:' + customName;
+        }
+        
+        return true;
+    }
+    
+    // Auto-fill abbreviation if user types common university names
+    customCampusInput.addEventListener('input', function() {
+        const value = this.value.toLowerCase();
+        
+        // Common Nigerian university patterns
+        const patterns = [
+            { pattern: /university of lagos/i, suggestion: 'UNILAG' },
+            { pattern: /university of ibadan/i, suggestion: 'UI' },
+            { pattern: /university of benin/i, suggestion: 'UNIBEN' },
+            { pattern: /university of ilorin/i, suggestion: 'UNILORIN' },
+            { pattern: /university of nigeria/i, suggestion: 'UNN' },
+            { pattern: /ahmadu bello university/i, suggestion: 'ABU' },
+            { pattern: /obafemi awolowo university/i, suggestion: 'OAU' },
+            { pattern: /covenant university/i, suggestion: 'CU' },
+            { pattern: /babcock university/i, suggestion: 'BU' },
+            { pattern: /yaba college/i, suggestion: 'YABATECH' },
+            { pattern: /federal polytechnic/i, suggestion: 'FEDPOLY' },
+            { pattern: /state polytechnic/i, suggestion: 'STATEPOLY' },
+            { pattern: /college of education/i, suggestion: 'COE' },
+        ];
+        
+        for (const pattern of patterns) {
+            if (pattern.pattern.test(value)) {
+                // Could add a suggestion popup here if needed
+                console.log(`Suggested abbreviation: ${pattern.suggestion}`);
+                break;
+            }
+        }
+    });
+    
+    // Add search functionality to campus dropdown
+    campusSelect.addEventListener('focus', function() {
+        this.size = 8; // Show more options when focused
+    });
+    
+    campusSelect.addEventListener('blur', function() {
+        this.size = 1; // Reset to single line
+    });
+    
+    // Add keyboard navigation
+    campusSelect.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && this.value === 'custom') {
+            customCampusInput.focus();
+            e.preventDefault();
+        }
+    });
+    
+    // Expose validation function
+    return {
+        validate: validateCampus,
+        getSelectedCampus: function() {
+            if (campusSelect.value === 'custom') {
+                return customCampusInput.value.trim() || 'Custom Institution';
+            }
+            return campusSelect.options[campusSelect.selectedIndex].text;
+        }
+    };
+}
+
+// Update form validation to include campus validation
+function updateFormValidation() {
+    const campusValidation = initializeCampusSelection();
+    
+    // Extend the existing validateSignupForm function
+    const originalValidate = window.validateSignupForm || function() { return true; };
+    
+    window.validateSignupForm = function() {
+        let isValid = originalValidate();
+        
+        // Validate campus
+        if (!campusValidation.validate()) {
+            isValid = false;
+        }
+        
+        return isValid;
+    };
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('campus')) {
+        initializeCampusSelection();
+        updateFormValidation();
+    }
+});
+
+// Function to toggle custom campus input (for inline HTML call)
+function toggleCustomCampus(selectElement) {
+    const customContainer = document.getElementById('customCampusContainer');
+    const customInput = document.getElementById('customCampus');
+    
+    if (selectElement.value === 'custom') {
+        customContainer.style.display = 'block';
+        customInput.required = true;
+        customInput.focus();
+    } else {
+        customContainer.style.display = 'none';
+        customInput.required = false;
+        customInput.value = '';
+    }
+}
+
