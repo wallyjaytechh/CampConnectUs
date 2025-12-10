@@ -972,38 +972,48 @@ input[type="date"] {
     font-family: 'Poppins', sans-serif;
 }
 
-/* Phone Section */
-.phone-input-container {
+/* Simple Phone Input */
+.phone-input-simple {
     display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.phone-prefix {
-    flex: 1;
-    display: flex;
-    align-items: center;
     border: 2px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     background: white;
+    transition: all 0.3s ease;
 }
 
-.phone-prefix span {
-    padding: 0 15px;
+.phone-input-simple:focus-within {
+    border-color: #1877f2;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+}
+
+.country-code-display {
+    padding: 0 20px;
     background: #f5f7fa;
     color: #555;
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 80px;
     border-right: 2px solid #ddd;
-    min-width: 70px;
-    text-align: center;
 }
 
-.phone-prefix input {
-    border: none;
-    padding: 12px 15px;
+.phone-input-simple input {
     flex: 1;
+    border: none;
+    padding: 14px 20px;
     font-size: 1rem;
+    outline: none;
+    background: transparent;
+}
+
+.phone-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 
