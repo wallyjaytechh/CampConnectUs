@@ -71,14 +71,14 @@
                     <!-- Personal Information -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="firstName">First Name *</label>
+                            <label for="firstName">First Name </label>
                             <input type="text" id="firstName" name="firstName" required 
                                    placeholder="Enter your first name">
                             <div class="form-error" id="firstNameError"></div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="lastName">Last Name *</label>
+                            <label for="lastName">Last Name </label>
                             <input type="text" id="lastName" name="lastName" required 
                                    placeholder="Enter your last name">
                             <div class="form-error" id="lastNameError"></div>
@@ -86,69 +86,65 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="email">Email Address *</label>
+                        <label for="email">Email Address </label>
                         <input type="email" id="email" name="email" required 
                                placeholder="Enter your email address">
                         <div class="form-error" id="emailError"></div>
                     </div>
                     
-                    <div class="form-group">
-    <label for="phone">Phone Number *</label>
-    <div class="phone-input-group">
-        <div class="country-code">
-            <select id="countryCode" name="countryCode">
-                <option value="+234" selected>+234 (NG)</option>
-                <option value="+1">+1 (US)</option>
-                <option value="+44">+44 (UK)</option>
-                <option value="+233">+233 (GH)</option>
-                <option value="+254">+254 (KE)</option>
-            </select>
+                   <div class="form-group">
+    <label for="phone">Phone Number </label>
+    <div class="phone-input-container">
+        <div class="phone-prefix">
+            <span>+234</span>
+            <input type="tel" id="phone" name="phone" required 
+                   placeholder="801 234 5678" 
+                   pattern="[0-9]{10}"
+                   title="Enter 10-digit Nigerian number (e.g., 8012345678)">
         </div>
-        <input type="tel" id="phone" name="phone" required 
-               placeholder="801 234 5678" pattern="[0-9]{10}">
-        <button type="button" class="btn-send-code" id="sendCodeBtn">
-            <i class="fas fa-sms"></i> Send Code
+        <button type="button" class="send-code-btn" id="sendCodeBtn">
+            <i class="fas fa-paper-plane"></i> Send Verification Code
         </button>
     </div>
-    <small style="color: #666; display: block; margin-top: 5px;">
-        Format: +234 801 234 5678 (without the +234, start with 0)
-    </small>
+    <small class="phone-hint">Enter your Nigerian number starting with 0 (e.g., 0801, 0701, 0901)</small>
     <div class="form-error" id="phoneError"></div>
 </div>
 
-<!-- Phone Verification -->
-<div class="form-group" id="phoneVerificationSection" style="display: none;">
-    <label for="verificationCode">Enter 6-digit Code *</label>
-    <div class="verification-input-group">
-        <input type="text" id="verificationCode" name="verificationCode" 
-               placeholder="Enter code from SMS" maxlength="6" pattern="[0-9]{6}">
-        <button type="button" class="btn-verify" id="verifyCodeBtn">
-            <i class="fas fa-check"></i> Verify Code
+<!-- Verification Code Section -->
+<div class="form-group" id="verificationSection" style="display: none;">
+    <label>Enter Verification Code *</label>
+    <div class="verification-container">
+        <input type="text" id="verificationCode" maxlength="6" 
+               placeholder="Enter 6-digit code" class="verification-input">
+        <button type="button" class="verify-btn" id="verifyBtn">
+            <i class="fas fa-check-circle"></i> Verify Code
         </button>
-        <button type="button" class="btn-resend" id="resendCodeBtn" style="display: none;">
-            <i class="fas fa-redo"></i> Resend
+        <button type="button" class="resend-btn" id="resendBtn" style="display: none;">
+            <i class="fas fa-redo"></i> Resend Code
         </button>
+    </div>
+    <div class="timer" id="timer" style="display: none;">
+        <i class="fas fa-clock"></i> Resend in <span id="countdown">60</span>s
+    </div>
+    <div class="verification-status" id="verificationStatus" style="display: none;">
+        <i class="fas fa-check-circle"></i> Phone verified successfully!
     </div>
     <div class="form-error" id="verificationError"></div>
-    <div id="verificationStatus" style="display: none; color: #0f9d58; margin-top: 5px;">
-        <i class="fas fa-check-circle"></i> Phone number verified!
-    </div>
-    <small id="verificationTimer" style="display: none; color: #666; margin-top: 5px;">
-        Resend code in: <span id="countdown">60</span> seconds
-    </small>
 </div>
+
+
                     <!-- Student/Staff Specific Fields -->
                     <div id="studentFields">
     <div class="form-row">
         <div class="form-group">
-            <label for="studentId">Student ID *</label>
+            <label for="studentId">Student ID </label>
             <input type="text" id="studentId" name="studentId" required 
                    placeholder="Enter your student ID">
             <div class="form-error" id="studentIdError"></div>
         </div>
         
         <div class="form-group">
-            <label for="faculty">Faculty *</label>
+            <label for="faculty">Faculty </label>
             <select id="faculty" name="faculty" required>
                 <option value="">Select Faculty</option>
                 <option value="arts">Faculty of Arts</option>
@@ -158,7 +154,17 @@
                 <option value="law">Faculty of Law</option>
                 <option value="social_sciences">Faculty of Social Sciences</option>
                 <option value="education">Faculty of Education</option>
-                <option value="business">Faculty of Business</option>
+                <option value="business_administration">Faculty of Business Administration</option>
+                <option value="agriculture">Faculty of Agriculture</option>
+                <option value="medical_sciences">Faculty of Basic Medical Sciences</option>
+                <option value="biological_sciences">Faculty of Biological Sciences</option>
+                <option value="dentistry">Faculty of Dentistry</option>
+                <option value="environmental_sciences">Faculty of Environmental Sciences</option>   
+                <option value="health_sciences">Faculty of Health Sciences</option>
+                <option value="pharmaceutical_sciences">Faculty of Pharmaceutical Sciences</option>
+                <option value="physical_sciences">Faculty of Physical Sciences</option>
+                <option value="veterinary_medicine">Faculty of Veterinary Medicine</option>
+                <option value="vocational_education">Faculty of Vocational & Technical Education</option>                
                 <option value="other">Other Faculty</option>
             </select>
             <div class="form-error" id="facultyError"></div>
@@ -167,14 +173,166 @@
     
     <div class="form-row">
         <div class="form-group">
-            <label for="department">Department *</label>
-            <input type="text" id="department" name="department" required 
-                   placeholder="e.g., Psychology, Economics, Computer Science">
-            <div class="form-error" id="departmentError"></div>
-        </div>
+    <label for="department">Department </label>
+    <select id="department" name="department" required class="department-select">
+        <option value="">-- Select Your Department --</option>
+        
+        <!-- Faculty of Arts & Humanities -->
+        <optgroup label="📚 Arts & Humanities">
+            <option value="english_literature">English & Literature</option>
+            <option value="linguistics">Linguistics</option>
+            <option value="history">History & International Studies</option>
+            <option value="philosophy">Philosophy</option>
+            <option value="religious_studies">Religious Studies</option>
+            <option value="theatre_arts">Theatre & Performing Arts</option>
+            <option value="music">Music</option>
+            <option value="fine_arts">Fine & Applied Arts</option>
+            <option value="french">French</option>
+            <option value="arabic">Arabic & Islamic Studies</option>
+            <option value="yoruba">Yoruba</option>
+            <option value="igbo">Igbo</option>
+            <option value="hausa">Hausa</option>
+        </optgroup>
+        
+        <!-- Faculty of Social Sciences -->
+        <optgroup label="🧠 Social Sciences">
+            <option value="economics">Economics</option>
+            <option value="political_science">Political Science</option>
+            <option value="sociology">Sociology</option>
+            <option value="psychology">Psychology</option>
+            <option value="mass_communication">Mass Communication</option>
+            <option value="international_relations">International Relations</option>
+            <option value="geography">Geography</option>
+            <option value="social_work">Social Work</option>
+            <option value="criminology">Criminology & Security Studies</option>
+            <option value="demography">Demography & Social Statistics</option>
+        </optgroup>
+        
+        <!-- Faculty of Science -->
+        <optgroup label="🔬 Sciences">
+            <option value="mathematics">Mathematics</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="biology">Biology</option>
+            <option value="biochemistry">Biochemistry</option>
+            <option value="microbiology">Microbiology</option>
+            <option value="zoology">Zoology</option>
+            <option value="botany">Botany</option>
+            <option value="geology">Geology</option>
+            <option value="computer_science">Computer Science</option>
+            <option value="statistics">Statistics</option>
+            <option value="environmental_science">Environmental Science</option>
+            <option value="marine_science">Marine Science</option>
+        </optgroup>
+        
+        <!-- Faculty of Engineering -->
+        <optgroup label="⚙️ Engineering">
+            <option value="civil_engineering">Civil Engineering</option>
+            <option value="mechanical_engineering">Mechanical Engineering</option>
+            <option value="electrical_engineering">Electrical Engineering</option>
+            <option value="electronic_engineering">Electronic Engineering</option>
+            <option value="computer_engineering">Computer Engineering</option>
+            <option value="chemical_engineering">Chemical Engineering</option>
+            <option value="petroleum_engineering">Petroleum Engineering</option>
+            <option value="agricultural_engineering">Agricultural Engineering</option>
+            <option value="aerospace_engineering">Aerospace Engineering</option>
+            <option value="material_engineering">Material Science & Engineering</option>
+            <option value="industrial_engineering">Industrial Engineering</option>
+        </optgroup>
+        
+        <!-- Faculty of Medicine & Health Sciences -->
+        <optgroup label="🏥 Medicine & Health">
+            <option value="medicine_surgery">Medicine & Surgery (MBBS)</option>
+            <option value="nursing">Nursing Science</option>
+            <option value="pharmacy">Pharmacy</option>
+            <option value="dentistry">Dentistry</option>
+            <option value="medical_lab">Medical Laboratory Science</option>
+            <option value="physiotherapy">Physiotherapy</option>
+            <option value="radiography">Radiography</option>
+            <option value="optometry">Optometry</option>
+            <option value="public_health">Public Health</option>
+            <option value="anatomy">Anatomy</option>
+            <option value="physiology">Physiology</option>
+            <option value="pharmacology">Pharmacology</option>
+        </optgroup>
+        
+        <!-- Faculty of Law -->
+        <optgroup label="⚖️ Law">
+            <option value="law">Law (LL.B)</option>
+            <option value="sharia_law">Sharia Law</option>
+            <option value="international_law">International Law</option>
+        </optgroup>
+        
+        <!-- Faculty of Education -->
+        <optgroup label="👨‍🏫 Education">
+            <option value="education_arts">Education & Arts</option>
+            <option value="education_science">Education & Science</option>
+            <option value="physical_health_education">Physical & Health Education</option>
+            <option value="adult_education">Adult Education</option>
+            <option value="special_education">Special Education</option>
+            <option value="educational_management">Educational Management</option>
+            <option value="guidance_counselling">Guidance & Counselling</option>
+            <option value="early_childhood_education">Early Childhood Education</option>
+        </optgroup>
+        
+        <!-- Faculty of Business & Management -->
+        <optgroup label="💼 Business & Management">
+            <option value="accounting">Accounting</option>
+            <option value="business_admin">Business Administration</option>
+            <option value="banking_finance">Banking & Finance</option>
+            <option value="marketing">Marketing</option>
+            <option value="insurance">Insurance</option>
+            <option value="entrepreneurship">Entrepreneurship</option>
+            <option value="human_resource">Human Resource Management</option>
+            <option value="supply_chain">Supply Chain Management</option>
+            <option value="project_management">Project Management</option>
+        </optgroup>
+        
+        <!-- Faculty of Agriculture -->
+        <optgroup label="🌱 Agriculture">
+            <option value="agric_economics">Agricultural Economics</option>
+            <option value="animal_science">Animal Science</option>
+            <option value="crop_science">Crop Science</option>
+            <option value="soil_science">Soil Science</option>
+            <option value="fisheries">Fisheries & Aquaculture</option>
+            <option value="forestry">Forestry & Wildlife</option>
+            <option value="agric_extension">Agricultural Extension</option>
+            <option value="food_science">Food Science & Technology</option>
+        </optgroup>
+        
+        <!-- Faculty of Environmental Studies -->
+        <optgroup label="🏙️ Environmental Studies">
+            <option value="architecture">Architecture</option>
+            <option value="estate_management">Estate Management</option>
+            <option value="urban_planning">Urban & Regional Planning</option>
+            <option value="quantity_surveying">Quantity Surveying</option>
+            <option value="building">Building Technology</option>
+            <option value="surveying">Surveying & Geoinformatics</option>
+        </optgroup>
+        
+        <!-- ICT & Computing -->
+        <optgroup label="💻 ICT & Computing">
+            <option value="information_tech">Information Technology</option>
+            <option value="software_engineering">Software Engineering</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="data_science">Data Science</option>
+            <option value="information_science">Information Science</option>
+            <option value="library_science">Library & Information Science</option>
+        </optgroup>
+        
+        <!-- Other Departments -->
+        <optgroup label="📋 Other Departments">
+            <option value="other">Other (Not Listed)</option>
+            <option value="combined_honors">Combined Honors</option>
+            <option value="general_studies">General Studies</option>
+        </optgroup>
+    </select>
+    <div class="form-error" id="departmentError"></div>
+    <small class="department-hint">Can't find your department? Select "Other" and specify during profile setup</small>
+</div>
         
         <div class="form-group">
-            <label for="year">Year of Study *</label>
+            <label for="year">Year of Study </label>
             <select id="year" name="year" required>
                 <option value="">Select year</option>
                 <option value="1">First Year</option>
@@ -188,34 +346,174 @@
         </div>
     </div>
     
-    <div class="form-row">
-        <div class="form-group">
-            <label for="dateOfBirth">Date of Birth *</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth" required 
-                   max="2008-12-31">
-            <div class="form-error" id="dateOfBirthError"></div>
-        </div>
+    <div class="form-group">
+    <label for="dateOfBirth">Date of Birth </label>
+    <input type="date" id="dateOfBirth" name="dateOfBirth" required 
+           max="2008-12-31" class="full-width-input">
+    <div class="form-error" id="dateOfBirthError"></div>
+</div>
+
         
         <div class="form-group">
-            <label for="campus">Campus *</label>
-            <input type="text" id="campus" name="campus" required 
-                   placeholder="Enter your campus">
-            <div class="form-error" id="campusError"></div>
-        </div>
+    <label for="campus">University/Campus </label>
+    <select id="campus" name="campus" required class="campus-select" onchange="toggleCustomCampus(this)">
+        <option value="">-- Select Your University --</option>
+        
+        <!-- Federal Universities -->
+        <optgroup label="🎓 Federal Universities">
+            <option value="unilag">University of Lagos (UNILAG)</option>
+            <option value="ui">University of Ibadan (UI)</option>
+            <option value="uniben">University of Benin (UNIBEN)</option>
+            <option value="unilorin">University of Ilorin (UNILORIN)</option>
+            <option value="unn">University of Nigeria, Nsukka (UNN)</option>
+            <option value="abu">Ahmadu Bello University (ABU)</option>
+            <option value="oau">Obafemi Awolowo University (OAU)</option>
+            <option value="unical">University of Calabar (UNICAL)</option>
+            <option value="unijos">University of Jos (UNIJOS)</option>
+            <option value="uniport">University of Port Harcourt (UNIPORT)</option>
+            <option value="futa">Federal University of Technology, Akure (FUTA)</option>
+            <option value="futminna">Federal University of Technology, Minna (FUTMINNA)</option>
+            <option value="futo">Federal University of Technology, Owerri (FUTO)</option>
+            <option value="fudma">Federal University, Dutsin-Ma (FUDMA)</option>
+            <option value="fuoye">Federal University, Oye-Ekiti (FUOYE)</option>
+            <option value="fuotuoke">Federal University, Otuoke (FUOTUOKE)</option>
+            <option value="fukashere">Federal University, Kashere (FUKASHERE)</option>
+            <option value="fugashua">Federal University, Gashua (FUGASHUA)</option>
+            <option value="fuam">Federal University of Agriculture, Abeokuta (FUNAAB)</option>
+            <option value="fumakurdi">Federal University of Agriculture, Makurdi (FUAM)</option>
+            <option value="nigerian_defence_academy">Nigerian Defence Academy (NDA)</option>
+            <option value="nigerian_maritime_university">Nigerian Maritime University (NMU)</option>
+        </optgroup>
+        
+        <!-- State Universities -->
+        <optgroup label="🏛️ State Universities">
+            <option value="lasu">Lagos State University (LASU)</option>
+            <option value="aaua">Adekunle Ajasin University Of Akure-Akoko (AAUA)</option>
+            <option value="lautech">Ladoke Akintola University of Technology (LAUTECH)</option>
+            <option value="delsu">Delta State University (DELSU)</option>
+            <option value="rivers_state_university">Rivers State University (RSU)</option>
+            <option value="ekiti_state_university">Ekiti State University (EKSU)</option>
+            <option value="kogi_state_university">Kogi State University (KSU)</option>
+            <option value="kwara_state_university">Kwara State University (KWASU)</option>
+            <option value="osun_state_university">Osun State University (UNIOSUN)</option>
+            <option value="ondo_state_university">Ondo State University (OAUSTECH)</option>
+            <option value="ogun_state_university">Ogun State University (OOU)</option>
+            <option value="edo_state_university">Edo State University (EDSU)</option>
+            <option value="imo_state_university">Imo State University (IMSU)</option>
+            <option value="abia_state_university">Abia State University (ABSU)</option>
+            <option value="anambra_state_university">Chukwuemeka Odumegwu Ojukwu University (COOU)</option>
+            <option value="enugu_state_university">Enugu State University of Science & Technology (ESUT)</option>
+            <option value="bayelsa_state_university">Bayelsa Medical University (BMU)</option>
+            <option value="akwa_ibom_state_university">Akwa Ibom State University (AKSU)</option>
+            <option value="cross_river_state_university">Cross River State University of Technology (CRUTECH)</option>
+            <option value="taraba_state_university">Taraba State University (TSU)</option>
+            <option value="plateau_state_university">Plateau State University (PLASU)</option>
+            <option value="kebbi_state_university">Kebbi State University of Science and Technology (KSUSTA)</option>
+            <option value="sokoto_state_university">Sokoto State University (SSU)</option>
+            <option value="katsina_state_university">Umaru Musa Yar'adua University (UMYU)</option>
+            <option value="kaduna_state_university">Kaduna State University (KASU)</option>
+            <option value="nasarawa_state_university">Nasarawa State University (NSUK)</option>
+            <option value="benue_state_university">Benue State University (BSU)</option>
+        </optgroup>
+        
+        <!-- Private Universities -->
+        <optgroup label="🏫 Private Universities">
+            <option value="covenant_university">Covenant University (CU)</option>
+            <option value="babcock_university">Babcock University (BU)</option>
+            <option value="abuad">Afe Babalola University (ABUAD)</option>
+            <option value="bells_university">Bells University of Technology (BELLS)</option>
+            <option value="bowen_university">Bowen University (BU)</option>
+            <option value="redeemers_university">Redeemer's University (RUN)</option>
+            <option value="crawford_university">Crawford University (CU)</option>
+            <option value="lead_city_university">Lead City University (LCU)</option>
+            <option value="ajayi_crowther_university">Ajayi Crowther University (ACU)</option>
+            <option value="caleb_university">Caleb University (CU)</option>
+            <option value="pan_atlantic_university">Pan-Atlantic University (PAU)</option>
+            <option value="american_university_nigeria">American University of Nigeria (AUN)</option>
+            <option value="veritas_university">Veritas University (VU)</option>
+            <option value="madonna_university">Madonna University (MU)</option>
+            <option value="caritas_university">Caritas University (CU)</option>
+            <option value="novena_university">Novena University (NU)</option>
+            <option value="southwestern_university">Southwestern University (SWU)</option>
+            <option value="wesely_university">Wesley University of Science & Technology (WUSTO)</option>
+            <option value="edwin_clark_university">Edwin Clark University (ECU)</option>
+            <option value="elizade_university">Elizade University (EU)</option>
+            <option value="kola_daisi_university">Kola Daisi University (KDU)</option>
+            <option value="dominion_university">Dominion University (DU)</option>
+        </optgroup>
+        
+        <!-- Polytechnics -->
+        <optgroup label="🔧 Polytechnics">
+            <option value="yabatech">Yaba College of Technology (YABATECH)</option>
+            <option value="federal_poly_nekede">Federal Polytechnic Nekede (FPN)</option>
+            <option value="federal_poly_ilaro">Federal Polytechnic Ilaro (FPI)</option>
+            <option value="federal_poly_ado">Federal Polytechnic Ado-Ekiti (FPA)</option>
+            <option value="federal_poly_bauchi">Federal Polytechnic Bauchi (FPB)</option>
+            <option value="federal_poly_mubi">Federal Polytechnic Mubi (FPM)</option>
+            <option value="imo_state_poly">Imo State Polytechnic (IMOPOLY)</option>
+            <option value="delta_state_poly">Delta State Polytechnic (DSPG)</option>
+            <option value="kwara_state_poly">Kwara State Polytechnic (KWARAPOLY)</option>
+            <option value="lagos_state_poly">Lagos State Polytechnic (LASPOTECH)</option>
+            <option value="ogun_state_poly">Ogun State Institute of Technology (OGITECH)</option>
+            <option value="oyo_state_poly">The Polytechnic Ibadan (POLYIBADAN)</option>
+            <option value="rivers_state_poly">Rivers State Polytechnic (RIVPOLY)</option>
+            <option value="akwa_ibom_state_poly">Akwa Ibom State Polytechnic (AKWAPOLY)</option>
+        </optgroup>
+        
+        <!-- Colleges of Education -->
+        <optgroup label="👩‍🏫 Colleges of Education">
+            <option value="federal_college_education_abeokuta">Federal College of Education, Abeokuta (FCE ABK)</option>
+            <option value="federal_college_education_zaria">Federal College of Education, Zaria (FCE ZARIA)</option>
+            <option value="adeyemi_college_education">Adeyemi College of Education (ACE)</option>
+            <option value="alvan_ikoku_college_education">Alvan Ikoku College of Education (AICE)</option>
+            <option value="college_education_ikere">College of Education, Ikere (COEIKERE)</option>
+            <option value="college_education_warri">College of Education, Warri (COEWARRI)</option>
+            <option value="osun_state_college_education">Osun State College of Education (OSCOED)</option>
+            <option value="kwara_state_college_education">Kwara State College of Education (KWCOE)</option>
+            <option value="oyo_state_college_education">Oyo State College of Education (OYOCOED)</option>
+            <option value="niger_state_college_education">Niger State College of Education (NISCOED)</option>
+        </optgroup>
+        
+        <!-- Other Institutions -->
+        <optgroup label="📋 Other Institutions">
+            <option value="nigerian_law_school">Nigerian Law School (NLS)</option>
+            <option value="nigerian_college_aviation">Nigerian College of Aviation Technology (NCAT)</option>
+            <option value="nigerian_defense_academy">Nigerian Defence Academy (NDA)</option>
+            <option value="nigerian_army_university">Nigerian Army University Biu (NAUB)</option>
+            <option value="nigerian_naval_school">Nigerian Naval School of Health Sciences (NNSHS)</option>
+        </optgroup>
+        
+        <!-- Custom Option -->
+        <optgroup label="✏️ Custom Option">
+            <option value="custom">My Institution is not listed</option>
+        </optgroup>
+    </select>
+    
+    <!-- Custom Campus Input (Hidden by default) -->
+    <div id="customCampusContainer" style="display: none; margin-top: 15px;">
+        <label for="customCampus">Enter Your Institution Name *</label>
+        <input type="text" id="customCampus" name="customCampus" 
+               placeholder="e.g., University of Excellence, City Polytechnic, etc."
+               class="custom-campus-input">
+        <small class="custom-campus-hint">Enter the full name of your institution</small>
+        <div class="form-error" id="customCampusError"></div>
     </div>
+    
+    <div class="form-error" id="campusError"></div>
+    <small class="campus-hint">Can't find your institution? Select "My Institution is not listed" above</small>
 </div>
                     
                     <div id="staffFields" style="display: none;">
     <div class="form-row">
         <div class="form-group">
-            <label for="staffId">Staff ID *</label>
+            <label for="staffId">Staff ID </label>
             <input type="text" id="staffId" name="staffId" 
                    placeholder="Enter your staff ID">
             <div class="form-error" id="staffIdError"></div>
         </div>
         
         <div class="form-group">
-            <label for="staffFaculty">Faculty/Department *</label>
+            <label for="staffFaculty">Faculty/Department </label>
             <input type="text" id="staffFaculty" name="staffFaculty" 
                    placeholder="Enter your faculty/department">
             <div class="form-error" id="staffFacultyError"></div>
@@ -241,29 +539,27 @@
                     
                     <!-- Password -->
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="password">Password *</label>
-                            <div style="position: relative;">
-                                <input type="password" id="password" name="password" required 
-                                       placeholder="Create a password">
-                                <i class="fas fa-eye toggle-password" 
-                                   style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
-                            </div>
-                            <div class="form-error" id="passwordError"></div>
-                            <small style="color: #666; font-size: 0.85rem;">Must be at least 8 characters</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm Password *</label>
-                            <div style="position: relative;">
-                                <input type="password" id="confirmPassword" name="confirmPassword" required 
-                                       placeholder="Confirm your password">
-                                <i class="fas fa-eye toggle-password" 
-                                   style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
-                            </div>
-                            <div class="form-error" id="confirmPasswordError"></div>
-                        </div>
-                    </div>
+    <div class="form-group">
+        <label for="password">Password </label>
+        <div class="password-wrapper">
+            <input type="password" id="password" name="password" required 
+                   placeholder="Create a strong password">
+            <i class="fas fa-eye toggle-password"></i>
+        </div>
+        <small class="password-hint">Minimum 8 characters with letters and numbers</small>
+        <div class="form-error" id="passwordError"></div>
+    </div>
+    
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password </label>
+        <div class="password-wrapper">
+            <input type="password" id="confirmPassword" name="confirmPassword" required 
+                   placeholder="Re-enter your password">
+            <i class="fas fa-eye toggle-password"></i>
+        </div>
+        <div class="form-error" id="confirmPasswordError"></div>
+    </div>
+</div>
                     
                     <!-- Additional Information -->
                     <div class="form-group">
@@ -271,34 +567,42 @@
                         <textarea id="bio" name="bio" rows="3" 
                                   placeholder="Tell us about yourself..."></textarea>
                     </div>
-                    <!-- Proper CAPTCHA (I'm not a robot) -->
-<div class="form-group" id="captchaSection">
-    <label>Security Verification *</label>
-    <div class="captcha-container">
-        <div class="captcha-wrapper" id="captchaBox">
-            <div class="captcha-checkbox-area">
-                <div class="captcha-checkbox" id="captchaCheckbox">
-                    <i class="fas fa-check" style="display: none;"></i>
+                        
+                        <!-- Google reCAPTCHA -->
+<div class="form-group">
+    <label>Security Check *</label>
+    <div class="recaptcha-container">
+        <div class="g-recaptcha-placeholder" id="recaptchaBox">
+            <div class="recaptcha-checkbox" id="recaptchaCheckbox">
+                <div class="checkbox-square">
+                    <div class="checkbox-border"></div>
+                    <div class="checkbox-checkmark" style="display: none;">
+                        <i class="fas fa-check"></i>
+                    </div>
                 </div>
-                <div class="captcha-text">I'm not a robot</div>
+                <span class="checkbox-text">I'm not a robot</span>
             </div>
             
-            <div class="captcha-loading">
+            <div class="recaptcha-loading" style="display: none;">
                 <div class="loading-spinner"></div>
-                <div class="loading-text">Verifying...</div>
+                <span class="loading-text">Verifying...</span>
             </div>
             
-            <div class="captcha-success">
-                <i class="fas fa-check-circle"></i>
-                <div>Verification complete!</div>
+            <div class="recaptcha-success" style="display: none;">
+                <i class="fas fa-shield-alt"></i>
+                <span>Verification complete</span>
             </div>
             
-            <div class="captcha-logo-area">
-                <div class="captcha-privacy">
+            <div class="recaptcha-footer">
+                <div class="privacy-links">
                     <a href="privacy-policy.html">Privacy</a>
+                    <span>•</span>
                     <a href="terms-of-service.html">Terms</a>
                 </div>
-                <div>reCAPTCHA</div>
+                <div class="recaptcha-brand">
+                    <span>reCAPTCHA</span>
+                    <small>Privacy • Terms</small>
+                </div>
             </div>
         </div>
     </div>
