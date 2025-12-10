@@ -12,6 +12,34 @@ $db_pass = 'StrongPassword123!';
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
+// Check if account is locked
+$stmt = $pdo->prepare("SELECT locked_until FROM users WHERE email = ?");
+$stmt->execute([$email]);
+$lock = $stmt->fetchColumn();
+
+if ($lock && strtotime($lock) > time()) {
+    $remaining = strtotime($lock) - time();
+    $minutes = ceil($remaining / 60);
+    echo json_encode(['success' => false, 'message' => "Account locked. Try again in $minutes minutes"]);
+    exit;
+}
+
+// Increment login attempts on failure
+if (!$user || !password_verify($password, $user['password_hash'])) {
+    $stmt = $pdo->prepare("UPDATE users SET login_attempts = login_attempts + 1 WHERE email = ?");
+    $stmt->execute([$email]);
+    
+    // Lock after 5 failed attempts (1 hour)
+    $stmt = $pdo->prepare("UPDATE users SET locked_until = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE email = ? AND login_attempts >= 5");
+    $stmt->execute([$email]);
+    
+    echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
+    exit;
+}
+
+// Reset attempts on successful login
+$stmt = $pdo->prepare("UPDATE users SET login_attempts = 0, last_login = NOW() WHERE email = ?");
+$stmt->execute([$email]);
 // Validate input
 if (empty($email) || empty($password)) {
     echo json_encode(['success' => false, 'message' => 'Email and password are required']);
