@@ -543,46 +543,7 @@
                                   placeholder="Tell us about yourself..."></textarea>
                     </div>
                         
-                        <!-- Google reCAPTCHA -->
-<div class="form-group">
-    <label>Security Check *</label>
-    <div class="recaptcha-container">
-        <div class="g-recaptcha-placeholder" id="recaptchaBox">
-            <div class="recaptcha-checkbox" id="recaptchaCheckbox">
-                <div class="checkbox-square">
-                    <div class="checkbox-border"></div>
-                    <div class="checkbox-checkmark" style="display: none;">
-                        <i class="fas fa-check"></i>
-                    </div>
-                </div>
-                <span class="checkbox-text">I'm not a robot</span>
-            </div>
-            
-            <div class="recaptcha-loading" style="display: none;">
-                <div class="loading-spinner"></div>
-                <span class="loading-text">Verifying...</span>
-            </div>
-            
-            <div class="recaptcha-success" style="display: none;">
-                <i class="fas fa-shield-alt"></i>
-                <span>Verification complete</span>
-            </div>
-            
-            <div class="recaptcha-footer">
-                <div class="privacy-links">
-                    <a href="privacy-policy.html">Privacy</a>
-                    <span>•</span>
-                    <a href="terms-of-service.html">Terms</a>
-                </div>
-                <div class="recaptcha-brand">
-                    <span>reCAPTCHA</span>
-                    <small>Privacy • Terms</small>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-error" id="captchaError"></div>
-</div>
+                      
                     <!-- Terms Agreement -->
                     <div class="terms-agreement">
                         <label class="checkbox">
@@ -672,6 +633,97 @@
                 });
             }
         });
+
+        <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfLHScsAAAAAHi_76rPNGGBv7gwJFoa_Pv4mHCW"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle form submission
+        const signupForm = document.getElementById('signupForm');
+        if (signupForm) {
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form first
+                if (!validateFormBeforeSubmit()) {
+                    alert('Please fill all required fields correctly.');
+                    return;
+                }
+                
+                // Execute reCAPTCHA
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('6LfLHScsAAAAAHi_76rPNGGBv7gwJFoa_Pv4mHCW', {action: 'signup'})
+                    .then(function(token) {
+                        // Add token to form
+                        const tokenInput = document.createElement('input');
+                        tokenInput.type = 'hidden';
+                        tokenInput.name = 'g-recaptcha-response';
+                        tokenInput.value = token;
+                        signupForm.appendChild(tokenInput);
+                        
+                        // Submit form to backend
+                        submitFormToBackend(signupForm);
+                    });
+                });
+            });
+        }
+        
+        function submitFormToBackend(form) {
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            submitBtn.disabled = true;
+            
+            // Send to your backend endpoint
+            fetch('api/verify-signup.php', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Account created successfully! Redirecting to login...');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('❌ Error: ' + data.message);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Remove the token input
+                    const tokenInput = form.querySelector('input[name="g-recaptcha-response"]');
+                    if (tokenInput) tokenInput.remove();
+                }
+            })
+            .catch(error => {
+                alert('⚠️ Network error. Please check your connection and try again.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+        
+        function validateFormBeforeSubmit() {
+            const requiredFields = document.querySelectorAll('#signupForm input[required], #signupForm select[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                const errorElement = document.getElementById(field.id + 'Error');
+                if (errorElement) errorElement.textContent = '';
+                field.style.borderColor = '#ddd';
+                
+                if (!field.value.trim()) {
+                    if (errorElement) {
+                        errorElement.textContent = 'This field is required';
+                    }
+                    field.style.borderColor = '#ff3860';
+                    isValid = false;
+                }
+            });
+            
+            return isValid;
+        }
+    });
+    
 
     </script>
 </body>
