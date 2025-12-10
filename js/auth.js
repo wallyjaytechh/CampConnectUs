@@ -533,193 +533,58 @@ function initializeCaptcha() {
     };
 }
 
-// Improved Phone Verification with Country Code
-function initializePhoneVerification() {
-    const phoneInput = document.getElementById('phone');
-    const countryCodeSelect = document.getElementById('countryCode');
-    const sendCodeBtn = document.getElementById('sendCodeBtn');
-    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
-    const resendCodeBtn = document.getElementById('resendCodeBtn');
-    const verificationSection = document.getElementById('phoneVerificationSection');
-    const verificationStatus = document.getElementById('verificationStatus');
-    const phoneError = document.getElementById('phoneError');
+// Basic phone validation for Nigerian numbers
+function validatePhoneNumber() {
+    const phone = document.getElementById('phone').value.replace(/\s/g, '');
+    const errorElement = document.getElementById('phoneError');
     
-    if (!phoneInput || !sendCodeBtn) return;
-    
-    let verificationCode = '';
-    let isPhoneVerified = false;
-    let timerInterval;
-    let timeLeft = 60;
-    
-    // Format phone number as user types
-    phoneInput.addEventListener('input', function() {
-        let value = this.value.replace(/\D/g, '');
-        
-        // Format: 0801 234 5678
-        if (value.length > 0) {
-            value = value.match(/.{1,4}/g).join(' ');
-        }
-        
-        this.value = value;
-        
-        // Show/hide verification section
-        if (value.replace(/\s/g, '').length >= 10) {
-            verificationSection.style.display = 'block';
-            phoneError.textContent = '';
-        } else {
-            verificationSection.style.display = 'none';
-            verificationStatus.style.display = 'none';
-            isPhoneVerified = false;
-        }
-    });
-    
-    // Validate phone number format
-    function validatePhoneNumber() {
-        const phone = phoneInput.value.replace(/\s/g, '');
-        const countryCode = countryCodeSelect.value;
-        
-        if (!phone) {
-            phoneError.textContent = 'Phone number is required';
-            return false;
-        }
-        
-        if (phone.length < 10) {
-            phoneError.textContent = 'Phone number must be 10 digits (e.g., 08012345678)';
-            return false;
-        }
-        
-        if (!phone.startsWith('0')) {
-            phoneError.textContent = 'Phone number should start with 0 (e.g., 0801, 0701, 0901)';
-            return false;
-        }
-        
-        phoneError.textContent = '';
-        return true;
+    if (!phone) {
+        errorElement.textContent = 'Phone number is required';
+        return false;
     }
     
-    // Send verification code
-    sendCodeBtn.addEventListener('click', function() {
-        if (!validatePhoneNumber()) return;
-        
-        const phone = phoneInput.value.replace(/\s/g, '');
-        const countryCode = countryCodeSelect.value;
-        const fullNumber = countryCode + phone.substring(1); // Remove leading 0
-        
-        // Generate 6-digit code
-        verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-        
-        console.log(`📱 SMS Code for ${fullNumber}: ${verificationCode}`); // For testing
-        
-        // Show success message
-        alert(`✅ Verification code sent to ${countryCode} ${phone}\n\nTest Code: ${verificationCode}\n\nIn production, this would be sent via SMS`);
-        
-        // Disable send button
-        sendCodeBtn.disabled = true;
-        sendCodeBtn.innerHTML = '<i class="fas fa-clock"></i> Code Sent';
-        
-        // Show verification inputs
-        document.getElementById('verificationCode').value = '';
-        document.getElementById('verificationCode').disabled = false;
-        verifyCodeBtn.disabled = false;
-        verifyCodeBtn.style.display = 'inline-block';
-        verificationStatus.style.display = 'none';
-        
-        // Start countdown timer
-        startVerificationTimer();
-    });
-    
-    // Verify code
-    verifyCodeBtn.addEventListener('click', function() {
-        const enteredCode = document.getElementById('verificationCode').value.trim();
-        const errorElement = document.getElementById('verificationError');
-        
-        if (!enteredCode || enteredCode.length !== 6) {
-            errorElement.textContent = 'Please enter the 6-digit code';
-            errorElement.style.color = '#ff3860';
-            return;
-        }
-        
-        // In production: Verify with backend API
-        // For demo: Accept if code matches or any 6-digit code
-        if (enteredCode === verificationCode || /^\d{6}$/.test(enteredCode)) {
-            // Success
-            errorElement.textContent = '';
-            errorElement.style.color = '#0f9d58';
-            errorElement.innerHTML = '<i class="fas fa-check-circle"></i> Code verified!';
-            
-            // Update UI
-            document.getElementById('verificationCode').disabled = true;
-            verifyCodeBtn.disabled = true;
-            verifyCodeBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verified';
-            verifyCodeBtn.style.backgroundColor = '#0f9d58';
-            
-            // Show success status
-            verificationStatus.style.display = 'block';
-            isPhoneVerified = true;
-            
-            // Clear timer
-            clearInterval(timerInterval);
-            document.getElementById('verificationTimer').style.display = 'none';
-            resendCodeBtn.style.display = 'inline-block';
-            
-        } else {
-            errorElement.textContent = 'Invalid code. Please try again.';
-            errorElement.style.color = '#ff3860';
-        }
-    });
-    
-    // Resend code
-    if (resendCodeBtn) {
-        resendCodeBtn.addEventListener('click', function() {
-            // Reset and send new code
-            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-            const phone = phoneInput.value.replace(/\s/g, '');
-            const countryCode = countryCodeSelect.value;
-            
-            console.log(`📱 NEW SMS Code for ${countryCode + phone.substring(1)}: ${verificationCode}`);
-            
-            alert(`📱 New verification code sent!\n\nTest Code: ${verificationCode}`);
-            
-            // Reset UI
-            document.getElementById('verificationCode').value = '';
-            document.getElementById('verificationCode').disabled = false;
-            document.getElementById('verificationError').textContent = '';
-            verificationStatus.style.display = 'none';
-            isPhoneVerified = false;
-            resendCodeBtn.style.display = 'none';
-            
-            // Restart timer
-            startVerificationTimer();
-        });
+    if (phone.length !== 11) {
+        errorElement.textContent = 'Phone number must be 11 digits';
+        return false;
     }
     
-    function startVerificationTimer() {
-        timeLeft = 60;
-        const timerElement = document.getElementById('verificationTimer');
-        const countdownElement = document.getElementById('countdown');
-        
-        timerElement.style.display = 'block';
-        countdownElement.textContent = timeLeft;
-        
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            countdownElement.textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                sendCodeBtn.disabled = false;
-                sendCodeBtn.innerHTML = '<i class="fas fa-sms"></i> Send Code';
-                timerElement.style.display = 'none';
-            }
-        }, 1000);
+    if (!phone.startsWith('0')) {
+        errorElement.textContent = 'Nigerian number must start with 0';
+        return false;
     }
     
-    // Return verification status for form validation
-    return {
-        isVerified: () => isPhoneVerified,
-        validatePhone: validatePhoneNumber
-    };
+    const validPrefixes = ['080', '081', '090', '070', '091'];
+    const prefix = phone.substring(0, 3);
+    
+    if (!validPrefixes.includes(prefix)) {
+        errorElement.textContent = 'Invalid Nigerian number prefix';
+        return false;
+    }
+    
+    errorElement.textContent = '';
+    return true;
 }
+
+// Update form validation
+const originalValidateSignupForm = window.validateSignupForm || function() { return true; };
+
+window.validateSignupForm = function() {
+    let isValid = originalValidateSignupForm();
+    
+    // Add phone validation
+    if (!validatePhoneNumber()) {
+        isValid = false;
+    }
+    
+    // Keep CAPTCHA validation if you have it
+    const captchaCheckbox = document.getElementById('captchaCheckbox');
+    if (captchaCheckbox && !captchaCheckbox.checked) {
+        document.getElementById('captchaError').textContent = 'Please complete the security verification';
+        isValid = false;
+    }
+    
+    return isValid;
+};
 
 // Update form validation to include CAPTCHA and phone verification
 const originalValidateSignupForm = window.validateSignupForm || function() { return true; };
