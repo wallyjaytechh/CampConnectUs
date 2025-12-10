@@ -966,72 +966,181 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
         max-width: none;
     }
 }
-/* Phone Verification Styles */
-.verification-input-group {
+
+/* Date of Birth field styling */
+input[type="date"] {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Phone Section */
+.phone-input-container {
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    align-items: center;
 }
 
-.verification-input-group input {
+.phone-prefix {
     flex: 1;
+    display: flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
 }
 
-.btn-verify {
-    padding: 12px 20px;
-    background-color: #1877f2;
+.phone-prefix span {
+    padding: 0 15px;
+    background: #f5f7fa;
+    color: #555;
+    font-weight: 500;
+    border-right: 2px solid #ddd;
+    min-width: 70px;
+    text-align: center;
+}
+
+.phone-prefix input {
+    border: none;
+    padding: 12px 15px;
+    flex: 1;
+    font-size: 1rem;
+}
+
+.send-code-btn {
+    padding: 14px 25px;
+    background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
     color: white;
     border: none;
     border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    font-size: 1rem;
 }
 
-.btn-verify:hover {
-    background-color: #166fe5;
+.send-code-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(24, 119, 242, 0.3);
 }
 
-.btn-verify:disabled {
-    background-color: #ccc;
+.send-code-btn:disabled {
+    background: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
-/* Proper CAPTCHA Styles */
-.captcha-container {
-    margin: 20px 0;
+.phone-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
 }
 
-.captcha-wrapper {
+/* Verification Section */
+.verification-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.verification-input {
+    flex: 1;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.verify-btn, .resend-btn {
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 140px;
+}
+
+.verify-btn {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+}
+
+.resend-btn {
+    background: #666;
+    color: white;
+}
+
+.timer {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.verification-status {
+    margin-top: 10px;
+    color: #4CAF50;
+    font-weight: 500;
+}
+
+/* Full width inputs */
+.full-width-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+/* Password Section */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+}
+
+.password-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* reCAPTCHA */
+.recaptcha-container {
     border: 2px solid #ddd;
     border-radius: 4px;
     padding: 15px;
     background: #f9f9f9;
-    width: 100%;
     max-width: 350px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    user-select: none;
 }
 
-.captcha-wrapper.verifying {
-    border-color: #4285f4;
-    background: #f8f9ff;
-}
-
-.captcha-wrapper.verified {
-    border-color: #0f9d58;
-    background: #f0fff4;
-}
-
-.captcha-checkbox-area {
+.recaptcha-checkbox {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.captcha-checkbox {
-    width: 24px;
-    height: 24px;
+.checkbox-square {
+    width: 28px;
+    height: 28px;
     border: 2px solid #ccc;
     border-radius: 2px;
     background: white;
@@ -1041,31 +1150,28 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
     transition: all 0.3s ease;
 }
 
-.captcha-checkbox.checked {
-    border-color: #0f9d58;
-    background: #0f9d58;
+.recaptcha-checkbox.active .checkbox-square {
+    border-color: #4285f4;
+    background: #4285f4;
 }
 
-.captcha-checkbox.checked i {
+.checkbox-checkmark {
     color: white;
-    font-size: 16px;
+    font-size: 18px;
 }
 
-.captcha-text {
+.checkbox-text {
     font-size: 16px;
     font-weight: 500;
     color: #333;
 }
 
-.captcha-loading {
-    display: none;
+.recaptcha-loading, .recaptcha-success {
+    display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 10px;
-}
-
-.captcha-wrapper.verifying .captcha-loading {
-    display: flex;
+    margin-top: 15px;
+    display: none;
 }
 
 .loading-spinner {
@@ -1082,149 +1188,219 @@ _::-webkit-full-page-media, _:future, :root .contact-grid {
     font-size: 14px;
 }
 
-.captcha-success {
-    display: none;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
+.recaptcha-success {
     color: #0f9d58;
 }
 
-.captcha-wrapper.verified .captcha-success {
-    display: flex;
-}
-
-.captcha-success i {
-    font-size: 20px;
-}
-
-.captcha-logo-area {
+.recaptcha-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
     font-size: 12px;
     color: #666;
 }
 
-.captcha-privacy {
-    display: flex;
-    gap: 10px;
-}
-
-.captcha-privacy a {
+.privacy-links a {
     color: #4285f4;
     text-decoration: none;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.recaptcha-brand small {
+    display: block;
+    font-size: 10px;
 }
 
-/* Date of Birth field styling */
-input[type="date"] {
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Phone Input with Country Code */
-.phone-input-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.country-code select {
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    background: white;
-    font-size: 1rem;
-    min-width: 120px;
-}
-
-.phone-input-group input {
-    flex: 1;
-}
-
-.btn-send-code {
-    padding: 12px 20px;
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+/* Remove asterisks from labels */
+.form-group label {
     font-weight: 500;
-    white-space: nowrap;
-    transition: background-color 0.3s ease;
+    margin-bottom: 8px;
+    display: block;
 }
 
-.btn-send-code:hover {
-    background-color: #166fe5;
+/* Form spacing */
+.form-group {
+    margin-bottom: 25px;
 }
 
-.btn-send-code:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.btn-resend {
-    padding: 12px 20px;
-    background-color: #666;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-/* Verification styles */
-.verification-input-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.verification-input-group input {
-    flex: 1;
-}
-
-.btn-verify {
-    padding: 12px 20px;
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
-}
-
-.btn-verify:hover {
-    background-color: #166fe5;
-}
-
-.btn-verify:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-    .phone-input-group,
-    .verification-input-group {
+    .phone-input-container,
+    .verification-container {
         flex-direction: column;
     }
     
-    .country-code select {
+    .phone-prefix,
+    .send-code-btn,
+    .verification-input,
+    .verify-btn,
+    .resend-btn {
         width: 100%;
     }
     
-    .btn-send-code,
-    .btn-verify,
-    .btn-resend {
-        width: 100%;
+    .send-code-btn {
+        min-width: auto;
     }
+}
+
+/* Department & Faculty Dropdown Styling */
+.department-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.department-select optgroup {
+    font-weight: 600;
+    color: #1877f2;
+    padding: 5px;
+    background: #f0f5ff;
+}
+
+.department-select option {
+    padding: 8px 15px;
+    font-weight: 400;
+    color: #333;
+}
+
+.department-select option:hover {
+    background-color: #1877f2;
+    color: white;
+}
+
+.department-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+/* Better select arrow */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 45px;
+}
+
+/* Responsive dropdowns */
+@media (max-width: 768px) {
+    .department-select,
+    select {
+        font-size: 16px; /* Prevents iOS zoom */
+    }
+}
+
+/* Campus Section Styling */
+.campus-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 10px;
+}
+
+.campus-select optgroup {
+    font-weight: 600;
+    color: #1877f2;
+    padding: 8px 5px;
+    background: #f0f5ff;
+    border-bottom: 1px solid #ddd;
+}
+
+.campus-select option {
+    padding: 10px 15px;
+    font-weight: 400;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.campus-select option:hover {
+    background-color: #1877f2;
+    color: white;
+}
+
+.campus-select optgroup[label*="Custom"] {
+    background: #fff8e1;
+    color: #ff9800;
+}
+
+.campus-select optgroup[label*="Custom"] option {
+    color: #ff9800;
+    font-weight: 600;
+}
+
+.custom-campus-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ff9800;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #fff8e1;
+    transition: all 0.3s ease;
+}
+
+.custom-campus-input:focus {
+    outline: none;
+    border-color: #1877f2;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+}
+
+.custom-campus-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.campus-hint {
+    display: block;
+    margin-top: 8px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Institution type indicators */
+.campus-select optgroup[label*="Federal"] { color: #2196F3; }
+.campus-select optgroup[label*="State"] { color: #4CAF50; }
+.campus-select optgroup[label*="Private"] { color: #9C27B0; }
+.campus-select optgroup[label*="Polytechnics"] { color: #FF9800; }
+.campus-select optgroup[label*="Colleges"] { color: #795548; }
+.campus-select optgroup[label*="Other"] { color: #607D8B; }
+
+/* Focus states */
+.campus-select:focus {
+    border-color: #1877f2;
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
+    outline: none;
+}
+
+/* Loading animation for custom input */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#customCampusContainer {
+    animation: slideDown 0.3s ease-out;
 }
