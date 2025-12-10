@@ -589,7 +589,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+ <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script>
         // User type toggle functionality
@@ -599,20 +599,11 @@
             const studentFields = document.getElementById('studentFields');
             const staffFields = document.getElementById('staffFields');
             
-            // Make student fields required by default
-            if (studentFields) {
-                const studentInputs = studentFields.querySelectorAll('input, select');
-                studentInputs.forEach(input => {
-                    input.required = true;
-                });
-            }
-            
             if (studentBtn && staffBtn) {
                 studentBtn.addEventListener('click', function() {
                     studentFields.style.display = 'block';
                     staffFields.style.display = 'none';
                     
-                    // Set required fields
                     const studentInputs = studentFields.querySelectorAll('input, select');
                     const staffInputs = staffFields.querySelectorAll('input, select');
                     
@@ -624,7 +615,6 @@
                     studentFields.style.display = 'none';
                     staffFields.style.display = 'block';
                     
-                    // Set required fields
                     const studentInputs = studentFields.querySelectorAll('input, select');
                     const staffInputs = staffFields.querySelectorAll('input, select');
                     
@@ -633,16 +623,22 @@
                 });
             }
         });
+    </script>
 
-        <!-- Google reCAPTCHA v3 -->
+    <!-- Google reCAPTCHA v3 -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LfLHScsAAAAAHi_76rPNGGBv7gwJFoa_Pv4mHCW"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('✅ reCAPTCHA script loaded');
+        
         // Handle form submission
         const signupForm = document.getElementById('signupForm');
         if (signupForm) {
+            console.log('✅ Form found:', signupForm);
+            
             signupForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                console.log('✅ Form submit event fired');
                 
                 // Validate form first
                 if (!validateFormBeforeSubmit()) {
@@ -650,10 +646,14 @@
                     return;
                 }
                 
+                console.log('✅ Form validation passed, executing reCAPTCHA...');
+                
                 // Execute reCAPTCHA
                 grecaptcha.ready(function() {
                     grecaptcha.execute('6LfLHScsAAAAAHi_76rPNGGBv7gwJFoa_Pv4mHCW', {action: 'signup'})
                     .then(function(token) {
+                        console.log('✅ reCAPTCHA token received:', token.substring(0, 50) + '...');
+                        
                         // Add token to form
                         const tokenInput = document.createElement('input');
                         tokenInput.type = 'hidden';
@@ -663,12 +663,20 @@
                         
                         // Submit form to backend
                         submitFormToBackend(signupForm);
+                    })
+                    .catch(function(error) {
+                        console.error('❌ reCAPTCHA error:', error);
+                        alert('Security check failed. Please refresh and try again.');
                     });
                 });
             });
+        } else {
+            console.error('❌ ERROR: No element with id="signupForm" found!');
         }
         
         function submitFormToBackend(form) {
+            console.log('✅ Submitting form to backend...');
+            
             // Show loading state
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
@@ -680,11 +688,15 @@
                 method: 'POST',
                 body: new FormData(form)
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('✅ Backend response received');
+                return response.json();
+            })
             .then(data => {
+                console.log('✅ Backend data:', data);
                 if (data.success) {
                     alert('✅ Account created successfully! Redirecting to login...');
-                    window.location.href = 'login.html';
+                    window.location.href = 'account-created.html';
                 } else {
                     alert('❌ Error: ' + data.message);
                     submitBtn.innerHTML = originalText;
@@ -696,6 +708,7 @@
                 }
             })
             .catch(error => {
+                console.error('❌ Fetch error:', error);
                 alert('⚠️ Network error. Please check your connection and try again.');
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -703,6 +716,7 @@
         }
         
         function validateFormBeforeSubmit() {
+            console.log('✅ Validating form...');
             const requiredFields = document.querySelectorAll('#signupForm input[required], #signupForm select[required]');
             let isValid = true;
             
@@ -717,14 +731,31 @@
                     }
                     field.style.borderColor = '#ff3860';
                     isValid = false;
+                    console.log('❌ Missing field:', field.id);
                 }
             });
             
+            // Check password match
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (password && confirmPassword && password.value !== confirmPassword.value) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+                console.log('❌ Passwords do not match');
+            }
+            
+            // Check terms agreement
+            const termsCheckbox = document.getElementById('terms');
+            if (termsCheckbox && !termsCheckbox.checked) {
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                isValid = false;
+                console.log('❌ Terms not agreed');
+            }
+            
+            console.log('✅ Form validation result:', isValid);
             return isValid;
         }
     });
-    
-
     </script>
 </body>
 </html>
