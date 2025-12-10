@@ -112,6 +112,72 @@
             </div>
         </div>
     </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            submitBtn.disabled = true;
+            
+            // Prepare form data
+            const formData = new FormData(loginForm);
+            
+            // Send to backend
+            fetch('api/login.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Login successful
+                    alert('✅ ' + data.message);
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+                } else {
+                    // Login failed
+                    alert('❌ ' + data.message);
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Highlight specific errors
+                    if (data.message.includes('verify')) {
+                        // Show resend verification option
+                        showResendVerification(formData.get('email'));
+                    }
+                }
+            })
+            .catch(error => {
+                alert('⚠️ Network error. Please try again.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+    
+    function showResendVerification(email) {
+        if (confirm('Resend verification email to ' + email + '?')) {
+            fetch('api/resend-verification.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: email})
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            });
+        }
+    }
+});
+</script>
 
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
